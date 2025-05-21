@@ -1,0 +1,84 @@
+
+<section class="vh-100" style="background-color: #e3f2fd;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-lg" style="border-radius: 1rem; border: none;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-4">
+              <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Medical Icon" width="60">
+            </div>
+
+            <div *ngIf="alertMessage" class="alert" [ngClass]="{'alert-success': alertType === 'success', 'alert-danger': alertType === 'error'}" role="alert">
+              {{ alertMessage }}
+            </div>
+            <h3 class="mb-4" style="color: #0277bd;">Registro Médico</h3>
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+              <div class="mb-3">
+                <label for="inputName" class="form-label" style="color: #0277bd; font-weight: 600;">Nombre:</label>
+                <input formControlName="name" type="text" class="form-control" id="inputName" placeholder="Ingrese su nombre">
+                <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="text-danger small">
+                  El nombre es obligatorio.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="inputSurname" class="form-label" style="color: #0277bd; font-weight: 600;">Apellidos:</label>
+                <input formControlName="surname" type="text" class="form-control" id="inputSurname" placeholder="Ingrese sus apellidos">
+                <div *ngIf="registerForm.get('surname')?.invalid && registerForm.get('surname')?.touched" class="text-danger small">
+                  Los apellidos son obligatorios.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="inputUsername" class="form-label" style="color: #0277bd; font-weight: 600;">Nombre de Usuario:</label>
+                <input formControlName="username" type="text" class="form-control" id="inputUsername" placeholder="Ingrese su nombre de usuario">
+                <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-danger small">
+                  Un nombre de usuario es obligatorio.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="inputUsername" class="form-label" style="color: #0277bd; font-weight: 600;">Correo Electrónico:</label>
+                <input formControlName="email" type="text" class="form-control" id="inputUsername" placeholder="Ingrese su correo">
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">
+                  <small *ngIf="registerForm.get('email')?.hasError('required')">El correo es obligatorio.</small>
+                  <small *ngIf="registerForm.get('email')?.hasError('email')">Ingrese un correo válido.</small>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="inputPassword1" class="form-label" style="color: #0277bd; font-weight: 600;">Contraseña:</label>
+                <input formControlName="password" type="password" class="form-control" id="inputPassword1" placeholder="Ingrese su contraseña">
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
+                  La contraseña es obligatoria.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="inputPassword2" class="form-label" style="color: #0277bd; font-weight: 600;">Confirmar Contraseña:</label>
+                <input formControlName="passwordConfirm" type="password" class="form-control" id="inputPassword2" placeholder="Repita su contraseña">
+                <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('passwordConfirm')?.touched" class="text-danger small">
+                  Las contraseñas no coinciden.
+                </div>
+              </div>
+
+
+
+
+              <button type="submit" class="btn btn-primary w-100" style="background-color: #0288d1; border: none; font-weight: 600;" [disabled]="registerForm.invalid">
+                Registrarse
+              </button>
+            </form>
+            -
+
+            <hr class="my-4">
+            <p class="small text-muted">¿Ya tienes una cuenta? <a href="#" style="color: #0288d1; font-weight: 600;">Inicia sesión aquí</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

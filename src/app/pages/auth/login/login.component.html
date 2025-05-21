@@ -1,0 +1,31 @@
+<section class="vh-100" style="background-color: #e3f2fd;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-lg" style="border-radius: 1rem; border: none;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-4">
+              <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Medical Icon" width="60">
+            </div>
+            <h3 class="mb-4" style="color: #0277bd;">IDoctor</h3>
+            <div class="alert alert-danger" role="alert" *ngIf="loginError != null">
+              {{loginError}}
+            </div>
+            <form [formGroup]="loginForm" (submit)="login()">
+              <div class="mb-3">
+                <label for="email" class="form-label" style="color: #0277bd; font-weight: 600;">Correo Electrónico:</label>
+                <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese su correo">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label" style="color: #0277bd; font-weight: 600;">Contraseña:</label>
+                <input formControlName="password" type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+              </div>
+              <button type="submit" class="btn btn-primary w-100" style="background-color: #0288d1; border: none; font-weight: 600;">Ingresar</button>
+            </form>
+            <hr class="my-4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
