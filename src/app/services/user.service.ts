@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {child, Database, objectVal, ref, set} from '@angular/fire/database';
-import {User} from '../models/UserVault.model';
+import {UserVault} from '../models/UserVault.model';
 import {map, Observable} from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class UserService {
    * Crea una nueva persona
    * @param user reserva a guardar o editar
    */
-  savePerson(user:User){
+  savePerson(user:UserVault){
     let userRef = ref(this.database,`/${this.COLLECTION_NAME}/${user.id}`);
 
     return set(userRef,user) as Promise<void>
@@ -38,15 +38,15 @@ export class UserService {
 
 
 
-  getUserByUid(uid:string):Observable<User>{
+  getUserByUid(uid:string):Observable<UserVault>{
 
     const usersRef = ref(this.database,this.COLLECTION_NAME);
     const userRef = child(usersRef,uid);
 
-    return objectVal(userRef) as Observable<User>
+    return objectVal(userRef) as Observable<UserVault>
   }
 
-  updatePerson(userID: string, updatedData: Partial<User>): Promise<void> {
+  updatePerson(userID: string, updatedData: Partial<UserVault>): Promise<void> {
     const consultRef = ref(this.database, `/users/${userID}`);
     return set(consultRef, updatedData);
   }

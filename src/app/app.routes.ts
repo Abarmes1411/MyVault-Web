@@ -7,7 +7,6 @@ export const routes: Routes = [
   {path: "signin", component: SigninComponent},
   {path: "home", component: LoginComponent},
   {path: '', component: LoginComponent},
-  {path: '/', component: LoginComponent},
   {path: '**', component: LoginComponent},
 
 ];

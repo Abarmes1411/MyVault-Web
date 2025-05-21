@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {matchValidator} from '../../../validators/match.validators';
 import {UserCredential} from '@angular/fire/auth';
-import {User} from '../../../models/UserVault.model';
+import {UserVault} from '../../../models/UserVault.model';
 import {UserService} from '../../../services/user.service';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -50,42 +51,32 @@ export class SigninComponent implements OnInit {
       const email = this.registerForm.get("email")?.value;
       const password = this.registerForm.get("password")?.value;
 
-      // Verificar si el email ya está en uso antes de registrar
-      this.userService.getAllUsers().subscribe((users) => {
-        const emailExists = users.some(user => user.email === email);
+      this.authService.register({ email, password })
+        .then((userCredential: UserCredential) => {
+          const id = userCredential.user.uid;
 
-        if (emailExists) {
-          this.showAlert("Ese email ya existe", 'error');
-        } else {
-          // Si el correo no existe, proceder con el registro
-          this.authService.register({ email, password })
-            .then((userCredential: UserCredential) => {
-              const id = userCredential.user.uid;
-              const createAt = new Date().toLocaleDateString();
+          const user: UserVault = new UserVault(id, name, surname, username, email);
 
-              let user: User = new User(
-                id,
-                name,
-                surname,
-                username,
-                email
-              );
+          this.userService.savePerson(user).then(() => {
+            this.router.navigate(["/home"]);
+          }).catch(err => {
+            console.error("Error al guardar en Firebase Database:", err);
+          });
 
-              user = JSON.parse(JSON.stringify(user));
-
-              this.userService.savePerson(user).then(() => {
-                this.router.navigate(["/home"]);
-              });
-            })
-            .catch(error => {
-              console.error('Error al registrar usuario:', error);
-            });
-        }
-      }, error => {
-        console.error('Error al obtener la lista de personas:', error);
-      });
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            this.showAlert("Ese email ya existe", 'error');
+          } else {
+            console.error('Error al registrar usuario:', error);
+          }
+        });
     }
   }
+
+
+
+
 
   private showAlert(message: string, type: 'success' | 'error'): void {
     this.alertMessage = message;
