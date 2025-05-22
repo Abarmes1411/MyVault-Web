@@ -5,9 +5,9 @@
         <div class="card shadow-lg" style="border-radius: 1rem; border: none;">
           <div class="card-body p-5 text-center">
             <div class="mb-4">
-              <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Medical Icon" width="60">
+              <img src="../../../../assets/logo_myvault.png" alt="MyVault Icon" width="200">
             </div>
-            <h3 class="mb-4" style="color: #0277bd;">IDoctor</h3>
+            <h3 class="mb-4" style="color: #0277bd;">Iniciar Sesión</h3>
             <div class="alert alert-danger" role="alert" *ngIf="loginError != null">
               {{loginError}}
             </div>
@@ -23,6 +23,7 @@
               <button type="submit" class="btn btn-primary w-100" style="background-color: #0288d1; border: none; font-weight: 600;">Ingresar</button>
             </form>
             <hr class="my-4">
+            <p class="mb-0">¿No tienes cuenta? <a routerLink="/signin" class="">Regístrate</a></p>
           </div>
         </div>
       </div>

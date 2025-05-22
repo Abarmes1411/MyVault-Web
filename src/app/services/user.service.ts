@@ -46,7 +46,7 @@ export class UserService {
     return objectVal(userRef) as Observable<UserVault>
   }
 
-  updatePerson(userID: string, updatedData: Partial<UserVault>): Promise<void> {
+  updateUser(userID: string, updatedData: Partial<UserVault>): Promise<void> {
     const consultRef = ref(this.database, `/users/${userID}`);
     return set(consultRef, updatedData);
   }

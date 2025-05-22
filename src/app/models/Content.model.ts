@@ -1,5 +1,6 @@
 export class Content {
   // Comunes
+  id: string | undefined;
   categoryID?: string;
   title?: string;
   description?: string;
@@ -54,6 +55,7 @@ export class Content {
 
   // Constructor estático para películas o series
   static fromTMDB(data: {
+    id: string;
     categoryID: string;
     title: string;
     description: string;
@@ -70,6 +72,7 @@ export class Content {
 
   // Constructor para libros
   static fromBook(data: {
+    id: string;
     categoryID: string;
     title: string;
     description: string;
@@ -93,6 +96,7 @@ export class Content {
 
   // Constructor para videojuegos
   static fromGame(data: {
+    id: string;
     categoryID: string;
     title: string;
     description: string;
@@ -112,6 +116,7 @@ export class Content {
 
   // Constructor para anime
   static fromAnime(data: {
+    id: string;
     categoryID: string;
     title: string;
     description: string;
@@ -129,6 +134,7 @@ export class Content {
 
   // Constructor para mangas o novelas ligeras
   static fromManga(data: {
+    id: string;
     categoryID: string;
     title: string;
     originalTitle: string;
@@ -146,6 +152,7 @@ export class Content {
 
   // Constructor para búsquedas rápidas
   static fromSearch(data: {
+    id: string;
     tmdbID: string;
     title: string;
     date: string;
@@ -153,6 +160,7 @@ export class Content {
     categoryID: string;
   }): Content {
     return new Content({
+      id: data.id,
       tmdbID: data.tmdbID,
       title: data.title,
       releaseDate: data.date,

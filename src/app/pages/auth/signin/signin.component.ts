@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {matchValidator} from '../../../validators/match.validators';
 import {UserCredential} from '@angular/fire/auth';
 import {UserVault} from '../../../models/UserVault.model';

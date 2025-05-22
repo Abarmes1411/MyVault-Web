@@ -6,7 +6,7 @@
         <div class="card shadow-lg" style="border-radius: 1rem; border: none;">
           <div class="card-body p-5 text-center">
             <div class="mb-4">
-              <img src="images/logo_myvault.png" alt="MyVault Icon" width="200">
+              <img src="../../../../assets/logo_myvault.png" alt="MyVault Icon" width="200">
             </div>
 
             <div *ngIf="alertMessage" class="alert" [ngClass]="{'alert-success': alertType === 'success', 'alert-danger': alertType === 'error'}" role="alert">
@@ -74,7 +74,7 @@
             -
 
             <hr class="my-4">
-            <p class="small text-muted">¿Ya tienes una cuenta? <a href="#" style="color: #0288d1; font-weight: 600;">Inicia sesión aquí</a></p>
+            <p class="small text-muted">¿Ya tienes una cuenta? <a href="/login" style="color: #0288d1; font-weight: 600;">Inicia sesión aquí</a></p>
           </div>
         </div>
       </div>

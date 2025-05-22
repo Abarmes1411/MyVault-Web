@@ -79,5 +79,13 @@ export class AuthService {
     );
   }
 
+  getUserVault(): Observable<UserVault | null> {
+    return this.getUserDataAuth().pipe(
+      map(data => data.userVault)
+    );
+  }
 
+  updateUserVault(userVault: UserVault): Promise<void> {
+    return this.userService.updateUser(userVault.id, userVault);
+  }
 }

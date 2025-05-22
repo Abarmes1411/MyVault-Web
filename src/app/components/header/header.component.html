@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
   <div class="container-fluid">
     <a class="navbar-brand text-white fw-bold" routerLink="/home">
       <i class="bi bi-stethoscope"></i> MyVault
@@ -16,24 +16,31 @@
               <i class="bi bi-house-door"></i> Inicio
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" routerLink="/contenidos">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="contenidosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-journal-text"></i> Contenidos
             </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="contenidosDropdown">
+              <li><a class="dropdown-item" routerLink="/contents/movies">Películas</a></li>
+              <li><a class="dropdown-item" routerLink="/contents/shows">Series</a></li>
+              <li><a class="dropdown-item" routerLink="/contents/games">Juegos</a></li>
+              <li><a class="dropdown-item" routerLink="/contents/animes">Animes</a></li>
+              <li><a class="dropdown-item" routerLink="/contents/mangas_novels">Mangas y Novelas</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" routerLink="/listas-personalizadas">
-              <i class="bi bi-list-check"></i> Mis Listas Personalizadas
+              <i class="bi bi-list-check"></i> Listas Personalizadas
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" routerLink="/mi-baul">
-              <i class="bi bi-box2-heart"></i> Mi Baúl
+              <i class="bi bi-box2-heart"></i> Baúl
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" routerLink="/mis-resenas">
-              <i class="bi bi-chat-left-text"></i> Mis Reseñas
+              <i class="bi bi-chat-left-text"></i> Reseñas
             </a>
           </li>
           <li class="nav-item">
@@ -55,7 +62,7 @@
 
         <ng-template #logMenu>
           <li class="nav-item">
-            <a class="nav-link text-white" routerLink="/singin">
+            <a class="nav-link text-white" routerLink="/signin">
               <i class="bi bi-pencil"></i> Registrarse
             </a>
           </li>
