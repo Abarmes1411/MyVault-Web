@@ -1,1 +1,72 @@
-<p>games works!</p>
+<div id="gamesRoot" style="position: relative;">
+  <div id="progressBarGames" class="spinner" *ngIf="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="loader"></div>
+  </div>
+
+  <div id="main" *ngIf="!loading">
+    <section>
+      <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+      <div *ngIf="recentGames.length > 0" class="game-carousel">
+        <div *ngFor="let game of recentGames" class="game-card">
+          <img [src]="game.coverImage" [alt]="game.title" />
+          <h2 class="game-title">{{ game.title }}</h2>
+          <p><strong>Fecha:</strong> {{ game.releaseDate }}</p>
+          <p *ngIf="game?.rating as rating">
+            <ng-container *ngIf="+rating > 0">
+              <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
+            </ng-container>
+          </p>
+
+
+
+        </div>
+      </div>
+      <div *ngIf="recentGames.length === 0">
+        No se encontraron juegos recientes.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Populares</h2>
+      <div *ngIf="popularGames.length > 0" class="game-carousel">
+        <div *ngFor="let game of popularGames" class="game-card">
+          <img [src]="game.coverImage" [alt]="game.title" />
+          <h2 class="game-title">{{ game.title }}</h2>
+          <p><strong>Fecha:</strong> {{ game.releaseDate }}</p>
+          <p *ngIf="game?.rating as rating">
+            <ng-container *ngIf="+rating > 0">
+              <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
+            </ng-container>
+          </p>
+
+
+        </div>
+      </div>
+      <div *ngIf="popularGames.length === 0">
+        No se encontraron juegos populares.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Próximamente</h2>
+      <div *ngIf="upcomingGames.length > 0" class="game-carousel">
+        <div *ngFor="let game of upcomingGames" class="game-card">
+          <img [src]="game.coverImage" [alt]="game.title" />
+          <h2 class="game-title">{{ game.title }}</h2>
+          <p><strong>Fecha:</strong> {{ game.releaseDate }}</p>
+          <p *ngIf="game?.rating as rating">
+            <ng-container *ngIf="+rating > 0">
+              <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
+            </ng-container>
+          </p>
+
+
+        </div>
+      </div>
+      <div *ngIf="upcomingGames.length === 0">
+        No se encontraron juegos próximos.
+      </div>
+    </section>
+  </div>
+</div>
+

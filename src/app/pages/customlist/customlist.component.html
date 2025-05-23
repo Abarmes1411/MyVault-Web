@@ -1,0 +1,9 @@
+<div class="container py-5">
+  <h2 class="text-white text-center mb-4">Mis listas personalizadas</h2>
+  <div class="row justify-content-center gy-4">
+    <div class="col-12 col-md-8" *ngFor="let customlist of customlists">
+      <app-customlist-resume [customlistInput]="customlist"></app-customlist-resume>
+    </div>
+  </div>
+</div>
+

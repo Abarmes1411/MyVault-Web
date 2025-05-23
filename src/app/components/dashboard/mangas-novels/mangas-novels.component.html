@@ -1,1 +1,134 @@
-<p>mangas-novels works!</p>
+<div id="mangasRoot" style="position: relative;">
+  <div id="progressBarMangas" class="spinner" *ngIf="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="loader"></div>
+  </div>
+  <div style="display: flex; justify-content: center; margin-top: 20px;">
+    <button
+      (click)="onTypeChange('manga')"
+      [ngClass]="{ active: selectedType === 'manga' }"
+      class="switch-button"
+    >
+      Mangas
+    </button>
+    <button
+      (click)="onTypeChange('novel')"
+      [ngClass]="{ active: selectedType === 'novel' }"
+      class="switch-button"
+    >
+      Novelas Ligeras
+    </button>
+  </div>
+
+
+  <div id="main" *ngIf="!loading">
+    <div *ngIf="selectedType === 'manga'">
+      <section>
+        <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+        <div *ngIf="newsMangas.length > 0" class="manga-carousel">
+          <div *ngFor="let manga of newsMangas" class="manga-card">
+            <img [src]="manga.coverImage" [alt]="manga.title" />
+            <h2 class="manga-title">{{ manga.title }}</h2>
+            <p><strong>Fecha:</strong> {{ manga.releaseDate }}</p>
+            <p *ngIf="+(manga.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="newsMangas.length === 0">
+          No se encontraron mangas recientes.
+        </div>
+      </section>
+
+      <section>
+        <h2 style="margin-left: 20px;">Lo mejor en emisión</h2>
+        <div *ngIf="topOngoingMangas.length > 0" class="manga-carousel">
+          <div *ngFor="let manga of topOngoingMangas" class="manga-card">
+            <img [src]="manga.coverImage" [alt]="manga.title" />
+            <h2 class="manga-title">{{ manga.title }}</h2>
+            <p><strong>Fecha:</strong> {{ manga.releaseDate }}</p>
+            <p *ngIf="+(manga.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="topOngoingMangas.length === 0">
+          No se encontraron mangas populares en emisión.
+        </div>
+      </section>
+
+      <section>
+        <h2 style="margin-left: 20px;">Mejores mangas de 2024</h2>
+        <div *ngIf="bestMangas.length > 0" class="manga-carousel">
+          <div *ngFor="let manga of bestMangas" class="manga-card">
+            <img [src]="manga.coverImage" [alt]="manga.title" />
+            <h2 class="manga-title">{{ manga.title }}</h2>
+            <p><strong>Fecha:</strong> {{ manga.releaseDate }}</p>
+            <p *ngIf="+(manga.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="bestMangas.length === 0">
+          No se encontraron mangas próximos.
+        </div>
+      </section>
+    </div>
+
+    <div *ngIf="selectedType === 'novel'">
+      <section>
+        <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+        <div *ngIf="newsNovels.length > 0" class="manga-carousel">
+          <div *ngFor="let novel of newsNovels" class="manga-card">
+            <img [src]="novel.coverImage" [alt]="novel.title" />
+            <h2 class="manga-title">{{ novel.title }}</h2>
+            <p><strong>Fecha:</strong> {{ novel.releaseDate }}</p>
+            <p *ngIf="+(novel.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="newsNovels.length === 0">
+          No se encontraron novelas recientes.
+        </div>
+      </section>
+
+      <section>
+        <h2 style="margin-left: 20px;">Lo mejor en emisión</h2>
+        <div *ngIf="topOngoingNovels.length > 0" class="manga-carousel">
+          <div *ngFor="let novel of topOngoingNovels" class="manga-card">
+            <img [src]="novel.coverImage" [alt]="novel.title" />
+            <h2 class="manga-title">{{ novel.title }}</h2>
+            <p><strong>Fecha:</strong> {{ novel.releaseDate }}</p>
+            <p *ngIf="+(novel.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="topOngoingNovels.length === 0">
+          No se encontraron novelas populares en emisión.
+        </div>
+      </section>
+
+      <section>
+        <h2 style="margin-left: 20px;">Mejores mangas de 2024</h2>
+        <div *ngIf="bestNovels.length > 0" class="manga-carousel">
+          <div *ngFor="let novel of bestNovels" class="manga-card">
+            <img [src]="novel.coverImage" [alt]="novel.title" />
+            <h2 class="manga-title">{{ novel.title }}</h2>
+            <p><strong>Fecha:</strong> {{ novel.releaseDate }}</p>
+            <p *ngIf="+(novel.rating ?? 0) > 0">
+              <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="bestNovels.length === 0">
+          No se encontraron novelas próximas.
+        </div>
+      </section>
+    </div>
+
+
+  </div>
+</div>
+
+

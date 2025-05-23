@@ -1,1 +1,58 @@
-<p>movies works!</p>
+<div id="moviesRoot" style="position: relative;">
+  <div id="progressBarMovies" class="spinner" *ngIf="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="loader"></div>
+  </div>
+
+  <div id="main" *ngIf="!loading">
+    <section>
+      <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+      <div *ngIf="recentMovies.length > 0" class="movie-carousel">
+        <div *ngFor="let movie of recentMovies" class="movie-card">
+          <img [src]="movie.coverImage" [alt]="movie.title" />
+          <h2 class="movie-title">{{ movie.title }}</h2>
+          <p><strong>Fecha:</strong> {{ movie.releaseDate }}</p>
+          <p *ngIf="+(movie.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="recentMovies.length === 0">
+        No se encontraron películas recientes.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Populares</h2>
+      <div *ngIf="popularMovies.length > 0" class="movie-carousel">
+        <div *ngFor="let movie of popularMovies" class="movie-card">
+          <img [src]="movie.coverImage" [alt]="movie.title" />
+          <h2 class="movie-title">{{ movie.title }}</h2>
+          <p><strong>Fecha:</strong> {{ movie.releaseDate }}</p>
+          <p *ngIf="+(movie.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="popularMovies.length === 0">
+        No se encontraron películas populares.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Próximamente</h2>
+      <div *ngIf="upcomingMovies.length > 0" class="movie-carousel">
+        <div *ngFor="let movie of upcomingMovies" class="movie-card">
+          <img [src]="movie.coverImage" [alt]="movie.title" />
+          <h2 class="movie-title">{{ movie.title }}</h2>
+          <p><strong>Fecha:</strong> {{ movie.releaseDate }}</p>
+          <p *ngIf="+(movie.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="upcomingMovies.length === 0">
+        No se encontraron películas próximas.
+      </div>
+    </section>
+  </div>
+</div>

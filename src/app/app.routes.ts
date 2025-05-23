@@ -9,6 +9,7 @@ import {GamesComponent} from './components/dashboard/games/games.component';
 import {AnimesComponent} from './components/dashboard/animes/animes.component';
 import {MangasNovelsComponent} from './components/dashboard/mangas-novels/mangas-novels.component';
 import {ProfileEditComponent} from './pages/profile-edit/profile-edit.component';
+import {CustomlistComponent} from './pages/customlist/customlist.component';
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -20,6 +21,7 @@ export const routes: Routes = [
   {path: 'contents/animes', component: AnimesComponent, canActivate: [AuthGuard] },
   {path: 'profile', component: ProfileEditComponent, canActivate: [AuthGuard] },
   {path: 'contents/mangas_novels', component: MangasNovelsComponent, canActivate: [AuthGuard] },
+  {path: 'customlists', component: CustomlistComponent, canActivate: [AuthGuard] },
 
 
 ];

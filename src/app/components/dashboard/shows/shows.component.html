@@ -1,1 +1,59 @@
-<p>shows works!</p>
+<div id="showsRoot" style="position: relative;">
+  <div id="progressBarShows" class="spinner" *ngIf="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="loader"></div>
+  </div>
+
+  <div id="main" *ngIf="!loading">
+    <section>
+      <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+      <div *ngIf="recentShows.length > 0" class="show-carousel">
+        <div *ngFor="let show of recentShows" class="show-card">
+          <img [src]="show.coverImage" [alt]="show.title" />
+          <h2 class="show-title">{{ show.title }}</h2>
+          <p><strong>Fecha:</strong> {{ show.releaseDate }}</p>
+          <p *ngIf="+(show.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ show.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="recentShows.length === 0">
+        No se encontraron series recientes.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Populares</h2>
+      <div *ngIf="popularShows.length > 0" class="show-carousel">
+        <div *ngFor="let show of popularShows" class="show-card">
+          <img [src]="show.coverImage" [alt]="show.title" />
+          <h2 class="show-title">{{ show.title }}</h2>
+          <p><strong>Fecha:</strong> {{ show.releaseDate }}</p>
+          <p *ngIf="+(show.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ show.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="popularShows.length === 0">
+        No se encontraron series populares.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Próximamente</h2>
+      <div *ngIf="upcomingShows.length > 0" class="show-carousel">
+        <div *ngFor="let show of upcomingShows" class="show-card">
+          <img [src]="show.coverImage" [alt]="show.title" />
+          <h2 class="show-title">{{ show.title }}</h2>
+          <p><strong>Fecha:</strong> {{ show.releaseDate }}</p>
+          <p *ngIf="+(show.rating ?? 0) > 0">
+            <strong>Puntuación:</strong> {{ show.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="upcomingShows.length === 0">
+        No se encontraron series próximas.
+      </div>
+    </section>
+  </div>
+</div>
+
