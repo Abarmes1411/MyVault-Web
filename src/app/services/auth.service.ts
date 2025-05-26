@@ -17,7 +17,7 @@ export class AuthService {
 
   async getUserId(): Promise<string | null> {
     const user = this.auth.currentUser;
-    return user ? user.uid : null; // Retorna el ID del usuario (UID) o null si no está autenticado
+    return user ? user.uid : null;
   }
 
 

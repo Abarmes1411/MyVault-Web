@@ -1,17 +1,35 @@
 <div class="container py-4">
   <div class="card shadow-sm border-success rounded-lg mt-4 mb-3" style="max-width: 600px; margin: auto;">
-    <div class="card-header bg-success text-white text-center d-flex justify-content-between align-items-center border-bottom border-success">
-      <h5 class="mb-0 fw-bold">
-        <i class="bi bi-list-check me-2"></i>{{ customlistInput.listName }}
-      </h5>
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center border-bottom border-success">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-list-check me-2"></i>
+        <h5 class="mb-0 fw-bold">
+          <ng-container *ngIf="!editandoNombre; else editTemplate">
+            {{ customlistInput.listName }}
+          </ng-container>
+          <ng-template #editTemplate>
+            <input [(ngModel)]="nuevoNombre" type="text" class="form-control form-control-sm" style="max-width: 200px; display: inline-block;" />
+            <button class="btn btn-sm btn-light ms-2" (click)="saveName()"><i class="bi bi-check-circle"></i></button>
+            <button class="btn btn-sm btn-danger ms-1" (click)="cancelEdit()"><i class="bi bi-x-circle"></i></button>
+          </ng-template>
+        </h5>
+      </div>
       <span class="badge bg-white text-success fs-6 px-3 py-2" [title]="'Número de elementos en la lista'">
         {{ getItemsCount(customlistInput.items) }}
       </span>
     </div>
     <div class="card-body text-dark text-center">
-      <p class="mb-0 fst-italic text-muted">
-        Elementos en la lista: <strong>{{ getItemsCount(customlistInput.items) }}</strong>
-      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <button class="btn btn-outline-success trash-hover" (click)="deleteList(customlistInput.listName)">
+          <i class="bi bi-trash"></i>
+        </button>
+        <a class="btn btn-success eye-hover" [routerLink]="['/customlists-detail', customlistInput.id]">
+          <i class="bi bi-eye me-2"></i> Ver Contenido
+        </a>
+        <button class="btn btn-outline-success pencil-hover" (click)="activateEdit()">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>

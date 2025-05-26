@@ -1,9 +1,41 @@
 <div class="container py-5">
-  <h2 class="text-white text-center mb-4">Mis listas personalizadas</h2>
-  <div class="row justify-content-center gy-4">
+  <h2 class="text-black text-center mb-4">Mis listas personalizadas</h2>
+
+  <!-- Botón para añadir lista -->
+  <div class="text-center">
+    <button class="btn btn-success" (click)="toggleNewListForm()">
+      <i class="bi bi-plus-circle me-2"></i> Nueva lista
+    </button>
+  </div>
+
+  <!-- Formulario para añadir lista -->
+  <div class="row justify-content-center mb-4" *ngIf="showNewListForm">
+    <div class="col-12 col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nombre de la nueva lista"
+          [(ngModel)]="newListName"
+          (keyup.enter)="addNewList()"
+        />
+        <button class="btn btn-success" (click)="addNewList()">Añadir</button>
+      </div>
+      <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <!-- Aviso si no hay listas -->
+  <div *ngIf="customlists.length === 0" class="text-center text-white fst-italic mt-5">
+    No tienes listas personalizadas. ¡Crea una nueva para empezar!
+  </div>
+
+  <!-- Listado de listas -->
+  <div class="row justify-content-center gy-4" *ngIf="customlists.length > 0">
     <div class="col-12 col-md-8" *ngFor="let customlist of customlists">
       <app-customlist-resume [customlistInput]="customlist"></app-customlist-resume>
     </div>
   </div>
 </div>
+
 

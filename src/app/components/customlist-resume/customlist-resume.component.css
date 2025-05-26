@@ -1,0 +1,41 @@
+/* Animación para el icono de la papelera */
+.trash-hover i {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.trash-hover:hover i {
+  transform: scale(1.2) rotate(-10deg);
+  color: #dc3545;
+}
+
+/* Pestañeo para el icono del ojo */
+.eye-hover i {
+  display: inline-block; /* Necesario para que la animación funcione */
+}
+.eye-hover:hover i {
+  animation: blink 0.4s ease-in-out;
+}
+
+@keyframes blink {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* Movimiento de "dibujar" para el lápiz */
+.pencil-hover i {
+  display: inline-block;
+}
+.pencil-hover:hover i {
+  animation: sketch 0.6s infinite;
+}
+
+@keyframes sketch {
+  0%   { transform: rotate(0deg) translateX(0); }
+  25%  { transform: rotate(4deg) translateX(1px); }
+  50%  { transform: rotate(-4deg) translateX(-1px); }
+  75%  { transform: rotate(2deg) translateX(1px); }
+  100% { transform: rotate(0deg) translateX(0); }
+}

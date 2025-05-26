@@ -1,0 +1,107 @@
+<div id="vaultRoot" style="position: relative;">
+
+  <div id="main" >
+    <section>
+      <h2 style="margin-left: 20px; margin-top: 20px">Peliculas</h2>
+      <div *ngIf="vaultMovies.length > 0" class="vault-carousel">
+        <div *ngFor="let movie of vaultMovies" class="vault-card">
+          <img [src]="movie.coverImage" [alt]="movie.title" />
+          <h2 class="vault-title">{{ movie.title }}</h2>
+          <p><strong>Fecha:</strong> {{ movie.releaseDate }}</p>
+          <p *ngIf="+(movie.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultMovies.length === 0">
+        No tienes películas en tu Baúl.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Series</h2>
+      <div *ngIf="vaultShows.length > 0" class="vault-carousel">
+        <div *ngFor="let show of vaultShows" class="vault-card">
+          <img [src]="show.coverImage" [alt]="show.title" />
+          <h2 class="vault-title">{{ show.title }}</h2>
+          <p><strong>Fecha:</strong> {{ show.releaseDate }}</p>
+          <p *ngIf="+(show.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ show.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultShows.length === 0">
+        No tienes series en tu Baúl.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Videojuegos</h2>
+      <div *ngIf="vaultGames.length > 0" class="vault-carousel">
+        <div *ngFor="let game of vaultGames" class="vault-card">
+          <img [src]="game.coverImage" [alt]="game.title" />
+          <h2 class="vault-title">{{ game.title }}</h2>
+          <p><strong>Fecha:</strong> {{ game.releaseDate }}</p>
+          <p *ngIf="+(game.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ game.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultGames.length === 0">
+        No tienes videojuegos en tu Baúl.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Anime</h2>
+      <div *ngIf="vaultAnimes.length > 0" class="vault-carousel">
+        <div *ngFor="let anime of vaultAnimes" class="vault-card">
+          <img [src]="anime.coverImage" [alt]="anime.title" />
+          <h2 class="vault-title">{{ anime.title }}</h2>
+          <p><strong>Fecha:</strong> {{ anime.releaseDate }}</p>
+          <p *ngIf="+(anime.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ anime.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultAnimes.length === 0">
+        No tienes animes en tu Baúl.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Manga</h2>
+      <div *ngIf="vaultMangas.length > 0" class="vault-carousel">
+        <div *ngFor="let manga of vaultMangas" class="vault-card">
+          <img [src]="manga.coverImage" [alt]="manga.title" />
+          <h2 class="vault-title">{{ manga.title }}</h2>
+          <p><strong>Fecha:</strong> {{ manga.releaseDate }}</p>
+          <p *ngIf="+(manga.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultMangas.length === 0">
+        No tienes mangas en tu Baúl.
+      </div>
+    </section>
+
+    <section>
+      <h2 style="margin-left: 20px;">Novelas</h2>
+      <div *ngIf="vaultNovels.length > 0" class="vault-carousel">
+        <div *ngFor="let novel of vaultNovels" class="vault-card">
+          <img [src]="novel.coverImage" [alt]="novel.title" />
+          <h2 class="vault-title">{{ novel.title }}</h2>
+          <p><strong>Fecha:</strong> {{ novel.releaseDate }}</p>
+          <p *ngIf="+(novel.rating ?? 0) > 0">
+            <strong>Tu puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="vaultNovels.length === 0">
+        No tienes novelas en tu Baúl.
+      </div>
+    </section>
+  </div>
+</div>
+

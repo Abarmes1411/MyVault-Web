@@ -1,1 +1,50 @@
-<p>customlist-detail works!</p>
+<div class="container py-4">
+  <h2 class="text-center mb-4">Contenido de la Lista</h2>
+
+  <div *ngIf="itemsContent.length === 0" class="text-center">
+    <p>No hay elementos en esta lista.</p>
+  </div>
+
+  <div *ngFor="let content of itemsContent; let i = index" class="card mb-3 shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          [src]="content.coverImage"
+          class="img-fluid rounded-start custom-img"
+          [alt]="content.title">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ content.title }}</h5>
+
+          <p class="card-text mb-1"><strong>Categoría:</strong> {{ getCategoryName(content.categoryID) }}</p>
+          <p class="card-text mb-1"><strong>Sinopsis:</strong> {{ content.description }}</p>
+          <p class="card-text mb-1"><strong>Calificación:</strong> {{ content.rating }} ({{ content.source }})</p>
+          <p class="card-text mb-1"><strong>Fecha de salida:</strong> {{ content.releaseDate }}</p>
+          <p class="card-text mb-2">
+            <strong>Tu valoración:</strong>
+            <ng-container *ngIf="content.userRating !== null; else noRating">
+              <ng-container *ngFor="let star of getStarIcons(content.userRating)">
+                <img [src]="'assets/stars/' + star" width="20" height="20" alt="estrella">
+              </ng-container>
+              ({{ content.userRating }}/5)
+            </ng-container>
+            <ng-template #noRating>
+              Aún no calificado
+            </ng-template>
+          </p>
+
+          <div class="d-flex gap-2 mt-3">
+            <a class="btn btn-success eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-success trash-hover"
+               (click)="deleteItem(content.mangaID || content.tmdbID || content.animeID || content.tmdbTVID || content.gameID || content.id)">
+              <i class="bi bi-trash"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
