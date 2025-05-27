@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CustomlistsService} from '../../services/customlists.service';
-import {Database, ref} from '@angular/fire/database';
+import {Database} from '@angular/fire/database';
 import {NgForOf, NgIf} from '@angular/common';
-import {get} from 'firebase/database';
 import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-customlist-detail',
+  standalone: true,
   imports: [
     NgForOf,
     NgIf
   ],
   templateUrl: './customlist-detail.component.html',
-  styleUrl: './customlist-detail.component.css'
+  styleUrls: ['./customlist-detail.component.css']
 })
 export class CustomlistDetailComponent implements OnInit {
 

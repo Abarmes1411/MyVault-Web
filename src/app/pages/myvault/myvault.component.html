@@ -8,12 +8,18 @@
           <img [src]="movie.coverImage" [alt]="movie.title" />
           <h2 class="vault-title">{{ movie.title }}</h2>
           <p><strong>Fecha:</strong> {{ movie.releaseDate }}</p>
-          <p *ngIf="+(movie.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(movie.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultMovies.length === 0">
+      <div *ngIf="vaultMovies.length === 0" style="margin-left: 20px">
         No tienes películas en tu Baúl.
       </div>
     </section>
@@ -25,12 +31,18 @@
           <img [src]="show.coverImage" [alt]="show.title" />
           <h2 class="vault-title">{{ show.title }}</h2>
           <p><strong>Fecha:</strong> {{ show.releaseDate }}</p>
-          <p *ngIf="+(show.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ show.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(show.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultShows.length === 0">
+      <div *ngIf="vaultShows.length === 0" style="margin-left: 20px">
         No tienes series en tu Baúl.
       </div>
     </section>
@@ -42,12 +54,18 @@
           <img [src]="game.coverImage" [alt]="game.title" />
           <h2 class="vault-title">{{ game.title }}</h2>
           <p><strong>Fecha:</strong> {{ game.releaseDate }}</p>
-          <p *ngIf="+(game.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ game.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(game.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultGames.length === 0">
+      <div *ngIf="vaultGames.length === 0" style="margin-left: 20px">
         No tienes videojuegos en tu Baúl.
       </div>
     </section>
@@ -59,12 +77,18 @@
           <img [src]="anime.coverImage" [alt]="anime.title" />
           <h2 class="vault-title">{{ anime.title }}</h2>
           <p><strong>Fecha:</strong> {{ anime.releaseDate }}</p>
-          <p *ngIf="+(anime.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ anime.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(anime.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultAnimes.length === 0">
+      <div *ngIf="vaultAnimes.length === 0" style="margin-left: 20px">
         No tienes animes en tu Baúl.
       </div>
     </section>
@@ -76,12 +100,18 @@
           <img [src]="manga.coverImage" [alt]="manga.title" />
           <h2 class="vault-title">{{ manga.title }}</h2>
           <p><strong>Fecha:</strong> {{ manga.releaseDate }}</p>
-          <p *ngIf="+(manga.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(manga.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultMangas.length === 0">
+      <div *ngIf="vaultMangas.length === 0" style="margin-left: 20px">
         No tienes mangas en tu Baúl.
       </div>
     </section>
@@ -93,12 +123,18 @@
           <img [src]="novel.coverImage" [alt]="novel.title" />
           <h2 class="vault-title">{{ novel.title }}</h2>
           <p><strong>Fecha:</strong> {{ novel.releaseDate }}</p>
-          <p *ngIf="+(novel.rating ?? 0) > 0">
-            <strong>Tu puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
-          </p>
+          <!-- Capa superpuesta con animación -->
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+            <a class="btn btn-outline-light trash-hover" (click)="deleteItem(novel.id)">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </div>
         </div>
       </div>
-      <div *ngIf="vaultNovels.length === 0">
+      <div *ngIf="vaultNovels.length === 0" style="margin-left: 20px">
         No tienes novelas en tu Baúl.
       </div>
     </section>
