@@ -1,0 +1,68 @@
+<div class="container py-4">
+  <div
+    class="review-card card shadow-sm border-black rounded-lg mt-4 mb-3"
+    style="max-width: 600px; margin: auto;"
+    (mouseenter)="hovered = true"
+    (mouseleave)="hovered = false"
+  >
+    <div
+      class="card-header bg-dark text-white d-flex justify-content-between align-items-center border-bottom border-success"
+    >
+    </div>
+
+    <div class="card-body text-dark">
+      <div *ngIf="contentData" class="mb-3 text-center">
+        <img
+          [src]="contentData.coverImage"
+          alt="Imagen de contenido"
+          class="img-fluid rounded mb-2"
+          style="max-height: 300px;"
+        />
+        <h5 class="fw-bold">{{ contentData.title }}</h5>
+      </div>
+
+      <div class="d-flex justify-content-center mb-2">
+        <ng-container *ngFor="let icon of starIcons">
+          <img [src]="icon" alt="star" width="24" height="24" style="margin-right: 4px;" />
+        </ng-container>
+      </div>
+
+
+
+      <!-- Contenido desplegable -->
+      <div
+        class="expandable"
+        [class.expanded]="hovered"
+      >
+        <p><strong>Comentario:</strong> {{ userReviewInput.comment }}</p>
+        <p><strong>Fecha:</strong> {{ userReviewInput.reviewDate }}</p>
+
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          <button class="btn btn-outline-primary edit-hover" (click)="openEditModal()" [disabled]="updateDisabled">
+            <i class="bi bi-pencil-square"></i> Editar review
+          </button>
+          <button class="btn btn-outline-danger trash-hover" (click)="deleteReview()">
+            <i class="bi bi-trash"></i> Eliminar review
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" *ngIf="showEditModal">
+  <div class="modal-content p-4 bg-white rounded shadow">
+    <h5 class="mb-3">Editar reseña</h5>
+
+    <label>Comentario</label>
+    <textarea class="form-control mb-3" [(ngModel)]="editReviewData.comment"></textarea>
+
+    <label>Puntuación (0 a 5)</label>
+    <input type="number" class="form-control mb-3" [(ngModel)]="editReviewData.rating" min="0" max="5" step="0.5">
+
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-secondary" (click)="closeEditModal()">Cancelar</button>
+      <button class="btn btn-primary" (click)="updateReview()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
