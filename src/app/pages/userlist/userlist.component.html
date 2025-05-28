@@ -1,0 +1,19 @@
+<div class="container py-5 userlist-container">
+  <h2 class="text-center section-title mb-5">👥 Lista de Usuarios</h2>
+
+  <!-- Aviso si no hay usuarios -->
+  <div *ngIf="userlists.length === 0" class="text-center no-users-msg">
+    <i class="bi bi-emoji-frown fs-1 d-block mb-2"></i>
+    <span>No hay usuarios. Esto está un poco vacío...</span>
+  </div>
+
+  <!-- Listado de usuarios -->
+  <div class="row justify-content-center g-4" *ngIf="userlists.length > 0">
+    <div class="col-12 col-md-10 col-lg-8" *ngFor="let user of userlists">
+      <app-userlist-resume
+        [userlistInput]="user"
+        [contexto]="'usuarios'"
+      ></app-userlist-resume>
+    </div>
+  </div>
+</div>

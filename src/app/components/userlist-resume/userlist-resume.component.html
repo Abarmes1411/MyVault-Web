@@ -1,0 +1,41 @@
+<div class="container py-3">
+  <div class="modern-card d-flex align-items-center shadow-sm">
+    <!-- Imagen del usuario -->
+    <img
+      [src]="'assets/profile-pics/' + userlistInput.profilePic"
+      alt="Foto de perfil"
+      class="profile-img"
+    />
+
+    <!-- Info del usuario -->
+    <div class="flex-grow-1 ps-3 user-info">
+      <h4 class="username mb-1">{{ userlistInput.username }}</h4>
+      <p class="name mb-0">{{ userlistInput.name }} {{ userlistInput.surname }}</p>
+    </div>
+
+    <!-- Botones (ocultos hasta hover) -->
+    <div class="action-buttons d-flex gap-2">
+      <ng-container *ngIf="contexto === 'amigos'">
+        <a class="btn btn-dark btn-sm eye-hover" [routerLink]="['/customlists-detail', userlistInput.id]">
+          <i class="bi bi-eye me-1"></i> Ver Reseñas
+        </a>
+        <button class="btn btn-outline-danger btn-sm trash-hover">
+          <i class="bi bi-trash"></i>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="contexto === 'usuarios'">
+        <ng-container *ngIf="!userlistInput.solicitudPendiente; else pendiente">
+          <button class="btn btn-success btn-sm" (click)="sendRequest()">
+            <i class="bi bi-person-plus-fill me-1"></i> Añadir Amigo
+          </button>
+        </ng-container>
+        <ng-template #pendiente>
+          <button class="btn btn-outline-secondary btn-sm" disabled>
+            <i class="bi bi-hourglass-split me-1"></i> Pendiente
+          </button>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>

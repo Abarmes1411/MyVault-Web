@@ -13,6 +13,9 @@ import {CustomlistComponent} from './pages/customlist/customlist.component';
 import {CustomlistDetailComponent} from './pages/customlist-detail/customlist-detail.component';
 import {MyVaultComponent} from './pages/myvault/myvault.component';
 import {UserreviewsComponent} from './pages/userreviews/userreviews.component';
+import {FriendlistComponent} from './pages/friendlist/friendlist.component';
+import {UserlistComponent} from './pages/userlist/userlist.component';
+import {RequestsComponent} from './pages/requests/requests.component';
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -28,6 +31,12 @@ export const routes: Routes = [
   {path: 'customlists-detail/:id', component: CustomlistDetailComponent, canActivate: [AuthGuard] },
   {path: 'myvault', component: MyVaultComponent, canActivate: [AuthGuard] },
   {path: 'userreviews', component: UserreviewsComponent, canActivate: [AuthGuard] },
+  {path: 'friends', component: FriendlistComponent, canActivate: [AuthGuard] },
+  {path: 'userlist', component: UserlistComponent, canActivate: [AuthGuard] },
+  {path: 'friends/requests', component: RequestsComponent, canActivate: [AuthGuard] },
+
+
+
 
 
 

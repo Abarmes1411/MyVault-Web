@@ -1,0 +1,30 @@
+<div class="container py-5 friendlist-container">
+  <h2 class="text-center section-title mb-5">🤝 Mis Amigos</h2>
+
+  <!-- Botones de acción alineados -->
+  <div class="d-flex justify-content-between flex-wrap gap-3 mb-4 px-3 px-md-5">
+    <button class="btn action-button" routerLink="/userlist">
+      <i class="bi bi-person-plus-fill me-2"></i> Añadir Amigo
+    </button>
+
+    <button class="btn action-button" routerLink="/friends/requests">
+      <i class="bi bi-envelope-paper-fill me-2"></i> Solicitudes de Amistad
+    </button>
+  </div>
+
+  <!-- Aviso si no hay amigos -->
+  <div *ngIf="friendlists.length === 0" class="text-center no-users-msg mt-5">
+    <i class="bi bi-person-dash fs-1 d-block mb-2"></i>
+    <span>No tienes amigos. ¡Añade alguno para empezar!</span>
+  </div>
+
+  <!-- Listado de amigos -->
+  <div class="row justify-content-center g-4" *ngIf="friendlists.length > 0">
+    <div class="col-12 col-md-10 col-lg-8" *ngFor="let friend of friendlists">
+      <app-userlist-resume
+        [userlistInput]="friend"
+        [contexto]="'amigos'"
+      ></app-userlist-resume>
+    </div>
+  </div>
+</div>
