@@ -1,1 +1,16 @@
-<p>userreviews works!</p>
+<div class="container py-5">
+  <h2 class="text-black text-center mb-4">Mis Reseñas</h2>
+
+  <div *ngIf="reviewList.length === 0" class="text-center text-white fst-italic mt-5">
+    No tienes reseñas. ¡Valora un contenido para empezar!
+  </div>
+
+  <div
+    class="reviews-wrapper"
+    *ngIf="reviewList.length > 0"
+  >
+    <div class="review-item" *ngFor="let reviewlist of reviewList">
+      <app-userreviews-resume [userReviewInput]="reviewlist"></app-userreviews-resume>
+    </div>
+  </div>
+</div>
