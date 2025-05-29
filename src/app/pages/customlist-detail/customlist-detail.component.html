@@ -1,6 +1,10 @@
 <div class="container py-4">
   <h2 class="text-center mb-4">Contenido de la Lista</h2>
 
+  <div *ngIf="userID !== listOwnerID" class="alert alert-info text-center">
+    Estás viendo una lista de otro usuario. No puedes modificar su contenido.
+  </div>
+
   <div *ngIf="itemsContent.length === 0" class="text-center">
     <p>No hay elementos en esta lista.</p>
   </div>
@@ -38,7 +42,8 @@
             <a class="btn btn-success eye-hover">
               <i class="bi bi-eye me-2"></i> Detalles
             </a>
-            <a class="btn btn-outline-success trash-hover"
+            <a *ngIf="userID === listOwnerID"
+               class="btn btn-outline-success trash-hover"
                (click)="deleteItem(content.mangaID || content.tmdbID || content.animeID || content.tmdbTVID || content.gameID || content.id)">
               <i class="bi bi-trash"></i>
             </a>

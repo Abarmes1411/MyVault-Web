@@ -1,1 +1,19 @@
-<p>requests works!</p>
+<div class="container py-5 userlist-container">
+  <h2 class="text-center section-title mb-5">Lista de Peticiones</h2>
+
+  <!-- Aviso si no hay usuarios -->
+  <div *ngIf="requests.length === 0" class="text-center no-users-msg">
+    <i class="bi bi-emoji-frown fs-1 d-block mb-2"></i>
+    <span>No hay solicitudes. Esto está un poco vacío...</span>
+  </div>
+
+  <!-- Listado de usuarios -->
+  <div class="row justify-content-center g-4" *ngIf="requests.length > 0">
+    <div class="col-12 col-md-10 col-lg-8" *ngFor="let request of requests">
+      <app-userlist-resume
+        [userlistInput]="request"
+        [contexto]="'peticiones'">
+      </app-userlist-resume>
+    </div>
+  </div>
+</div>

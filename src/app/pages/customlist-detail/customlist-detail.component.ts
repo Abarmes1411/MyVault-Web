@@ -4,6 +4,7 @@ import {CustomlistsService} from '../../services/customlists.service';
 import {Database} from '@angular/fire/database';
 import {NgForOf, NgIf} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
+import {ChatsService} from '../../services/chats.service';
 
 @Component({
   selector: 'app-customlist-detail',
@@ -21,52 +22,54 @@ export class CustomlistDetailComponent implements OnInit {
   listName: string = '';
   itemsContent: any[] = [];
   userID: string | null = null;
+  listOwnerID: string | null = null;
 
 
   constructor(
     private route: ActivatedRoute,
     private customlistService: CustomlistsService,
     private database: Database,
-    private authService:AuthService
+    private authService:AuthService,
+    private chatService: ChatsService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.listID = this.route.snapshot.paramMap.get('id')!;
-    this.loadListItemsAndContent();
     this.userID = await this.authService.getUserId();
+
+    // Buscar la lista y al dueño
+    const result = await this.chatService.getCustomListById(this.listID);
+    if (!result) {
+      console.error('Lista no encontrada');
+      return;
+    }
+
+    this.listName = result.list.listName;
+    this.listOwnerID = result.ownerId;
+
+    this.loadListItemsAndContent(result.list.items);
   }
 
-
-  async loadListItemsAndContent(): Promise<void> {
+  async loadListItemsAndContent(itemsMap: any): Promise<void> {
     try {
-      //Obtener el mapa de items de la lista personalizada a partir del ID de la lista
-      const itemsMap = await this.customlistService.getListItems(this.listID);
+      if (!itemsMap) return;
 
-      //Si no hay items o el ID de usuario no esta definido, termina la función
-      if (!itemsMap || !this.userID) return;
-
-      //Extraer los IDs de contenido del mapa
       const contentIDs = Object.values(itemsMap) as string[];
 
-      //Obtener los datos de contenido para cada ID de forma paralela
       const contentArray = await Promise.all(
         contentIDs.map(id => this.customlistService.getContentByID(id))
       );
 
-      //Obtener las reviews del usuario para poder asociarlas al contenido
-      const userReviews = await this.customlistService.getUserReviews(this.userID);
+      const userReviews = this.userID
+        ? await this.customlistService.getUserReviews(this.userID)
+        : [];
 
-      //Juntar el contenido con la valoración del usuario (si existe)
       this.itemsContent = contentArray
-        .filter(item => item) // Filtrar elementos nulos o indefinidos
+        .filter(item => item)
         .map(content => {
-          //Buscar si hay una review del usuario para este contenido
           const contentID = content.mangaID || content.tmdbID || content.animeID || content.tmdbTVID || content.gameID || content.id;
-          const userReview = userReviews.find(
-            review => review.contentID === contentID
-          );
+          const userReview = userReviews.find(r => r.contentID === contentID);
 
-          //Devolver el objeto de contenido incluyendo la valoración del usuario
           return {
             ...content,
             userRating: userReview ? userReview.rating : null
@@ -77,7 +80,6 @@ export class CustomlistDetailComponent implements OnInit {
       console.error('Error al cargar contenido:', error);
     }
   }
-
 
 
   getCategoryName(categoryID: string): string {

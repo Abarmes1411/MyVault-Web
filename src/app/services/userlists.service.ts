@@ -99,4 +99,27 @@ export class UserlistsService {
       map((friends: any) => friends || {})
     );
   }
+
+  getFriendsData(userId: string): Observable<any[]> {
+    const friendsRef = ref(this.database, `/users/${userId}/friends`);
+    return objectVal<{ [friendId: string]: true }>(friendsRef).pipe(
+      switchMap((friends) => {
+        if (!friends) return of([]);
+        const friendIds = Object.keys(friends);
+        if (friendIds.length === 0) return of([]);
+
+        const userlistsRef = ref(this.database, `/users`);
+        return objectVal<{ [userId: string]: any }>(userlistsRef).pipe(
+          map((allUsers) => {
+            if (!allUsers) return [];
+            return friendIds
+              .map(id => allUsers[id])
+              .filter(user => !!user);
+          })
+        );
+      })
+    );
+  }
+
+
 }

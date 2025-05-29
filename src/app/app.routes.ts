@@ -16,6 +16,7 @@ import {UserreviewsComponent} from './pages/userreviews/userreviews.component';
 import {FriendlistComponent} from './pages/friendlist/friendlist.component';
 import {UserlistComponent} from './pages/userlist/userlist.component';
 import {RequestsComponent} from './pages/requests/requests.component';
+import {ChatComponent} from './pages/chat/chat.component';
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -29,16 +30,12 @@ export const routes: Routes = [
   {path: 'contents/mangas_novels', component: MangasNovelsComponent, canActivate: [AuthGuard] },
   {path: 'customlists', component: CustomlistComponent, canActivate: [AuthGuard] },
   {path: 'customlists-detail/:id', component: CustomlistDetailComponent, canActivate: [AuthGuard] },
+  {path: 'customlists-detail/:ownerID/:listID', component: CustomlistDetailComponent, canActivate: [AuthGuard] },
   {path: 'myvault', component: MyVaultComponent, canActivate: [AuthGuard] },
   {path: 'userreviews', component: UserreviewsComponent, canActivate: [AuthGuard] },
   {path: 'friends', component: FriendlistComponent, canActivate: [AuthGuard] },
   {path: 'userlist', component: UserlistComponent, canActivate: [AuthGuard] },
   {path: 'friends/requests', component: RequestsComponent, canActivate: [AuthGuard] },
-
-
-
-
-
-
+  {path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] }
 
 ];
