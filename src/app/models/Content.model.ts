@@ -1,3 +1,5 @@
+import {UserReview} from './UserReview.model';
+
 export class Content {
   // Comunes
   id: string | undefined;
@@ -10,6 +12,7 @@ export class Content {
   source?: string;
   origin?: string;
   originalTitle?: string;
+  userReviews?: UserReview[];
 
   // Películas
   tmdbID?: string;

@@ -4,6 +4,7 @@ import {Content} from '../../../models/Content.model';
 import {GamesService} from '../../../services/games.service';
 import {MangasService} from '../../../services/mangas.service';
 import {NovelsService} from '../../../services/novels.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-mangas-novels',
@@ -11,7 +12,8 @@ import {NovelsService} from '../../../services/novels.service';
     DecimalPipe,
     NgForOf,
     NgIf,
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './mangas-novels.component.html',
   styleUrl: './mangas-novels.component.css'

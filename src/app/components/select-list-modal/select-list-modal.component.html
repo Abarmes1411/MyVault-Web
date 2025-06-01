@@ -1,0 +1,11 @@
+<div class="modal-backdrop" (click)="cancel()"></div>
+<div class="modal-content">
+  <h3>Selecciona una lista</h3>
+  <ul>
+    <li *ngFor="let name of listNames" (click)="selectList(name)">
+      {{ name }}
+    </li>
+  </ul>
+  <button (click)="cancel()">Cancelar</button>
+</div>
+

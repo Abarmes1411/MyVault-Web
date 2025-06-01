@@ -14,6 +14,11 @@
           <p *ngIf="+(movie.rating ?? 0) > 0">
             <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
           </p>
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', movie.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="recentMovies.length === 0">
@@ -31,6 +36,11 @@
           <p *ngIf="+(movie.rating ?? 0) > 0">
             <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
           </p>
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', movie.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="popularMovies.length === 0">
@@ -48,6 +58,11 @@
           <p *ngIf="+(movie.rating ?? 0) > 0">
             <strong>Puntuación:</strong> {{ movie.rating | number:'1.1-1' }}
           </p>
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', movie.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="upcomingMovies.length === 0">

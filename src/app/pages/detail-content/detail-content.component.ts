@@ -1,0 +1,238 @@
+import {Component, OnInit} from '@angular/core';
+import {Content} from '../../models/Content.model';
+import {ActivatedRoute} from '@angular/router';
+import {DetailContentsService} from '../../services/detail-contents.service';
+import {DecimalPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
+import {Database, get, ref} from '@angular/fire/database';
+import {SelectListModalComponent} from '../../components/select-list-modal/select-list-modal.component';
+
+@Component({
+  selector: 'app-detail-content',
+  imports: [
+    NgSwitchCase,
+    NgSwitch,
+    NgIf,
+    SelectListModalComponent,
+    NgForOf,
+    DecimalPipe,
+  ],
+  templateUrl: './detail-content.component.html',
+  styleUrl: './detail-content.component.css'
+})
+export class DetailContentComponent implements OnInit {
+  content: Content | null = null;
+  vaultStatus: 'idle' | 'checking' | 'exists' | 'added' = 'idle';
+  listStatus: 'idle' | 'checking' | 'exists' | 'added' = 'idle';
+  selectedContentId: string | null = null;
+  userLists: string[] = [];
+  showListModal = false;
+  showOriginalRating = false;
+
+
+
+
+
+  constructor(
+    private route: ActivatedRoute,
+    private contentService: DetailContentsService,
+    private authService: AuthService,
+    private db:Database,
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadContent(id);
+    }
+  }
+
+
+  async loadContent(id: string): Promise<void> {
+    this.content = await this.contentService.getContentById(id);
+  }
+
+  toggleOriginalRating(): void {
+    this.showOriginalRating = !this.showOriginalRating;
+  }
+
+
+  async addToVault(contentId: string | undefined): Promise<void> {
+    if (!contentId) {
+      console.error('El contentId es undefined.');
+      this.vaultStatus = 'idle';
+      return;
+    }
+
+    this.vaultStatus = 'checking';
+    const userId = await this.authService.getUserId();
+
+    if (!userId) {
+      console.error('No hay usuario autenticado.');
+      this.vaultStatus = 'idle';
+      return;
+    }
+
+    const result = await this.contentService.addToVault(userId, contentId);
+
+
+
+    this.vaultStatus = result;
+    setTimeout(() => this.vaultStatus = 'idle', 3000);
+  }
+
+  async openListSelector(contentId: string | undefined) {
+    if (!contentId) {
+      console.error('El contentId es undefined.');
+      this.listStatus = 'idle';
+      return;
+    }
+
+    this.selectedContentId = contentId;
+    this.listStatus = 'checking';
+
+    const userId = await this.authService.getUserId();
+    const listsRef = ref(this.db, `users/${userId}/customLists`);
+    const snapshot = await get(listsRef);
+    const lists = snapshot.val();
+
+    if (!lists) {
+      this.listStatus = 'idle';
+      return;
+    }
+
+    this.userLists = Object.keys(lists);
+    this.showListModal = true;
+  }
+
+
+  async confirmAddToList(listName: string) {
+    const userId = await this.authService.getUserId();
+    const contentId = this.selectedContentId;
+
+    if (!userId || !contentId) return;
+
+    const result = await this.contentService.addToListInSpecificList(userId, contentId, listName);
+    this.listStatus = result;
+    this.showListModal = false;
+    setTimeout(() => this.listStatus = 'idle', 3000);
+  }
+
+  cancelListModal() {
+    this.showListModal = false;
+    this.listStatus = 'idle';
+  }
+
+  getUserReviewAverage(): number {
+    if (!this.content?.userReviews) return 0;
+    const reviews = Object.values(this.content.userReviews);
+    if (reviews.length === 0) return 0;
+    const total = reviews.reduce((sum: number, r: any) => sum + (r.rating || 0), 0);
+    return total / reviews.length;
+  }
+
+  getStars(rating: number): string[] {
+    const stars: string[] = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars.push('assets/stars/full_star.PNG');
+      } else if (rating >= i - 0.5) {
+        stars.push('assets/stars/half_star.PNG');
+      } else {
+        stars.push('assets/stars/empty_star.png');
+      }
+    }
+    return stars;
+  }
+
+
+  getFormattedRating(): number {
+    if (!this.content || this.content.rating == null || !this.content.categoryID) return 0;
+
+    const rating = +this.content.rating;
+    const cat = this.content.categoryID;
+
+    if (cat === 'cat_1' || cat === 'cat_2') {
+      // TMDB: escala de 0 a 10
+      return Math.round((rating / 10) * 5 * 10) / 10;
+    } else if (cat === 'cat_3') {
+      // RAWG: ya está en escala de 0 a 5
+      return Math.round(rating * 10) / 10;
+    } else if (cat === 'cat_4' || cat === 'cat_5' || cat === 'cat_6') {
+      // AniList: escala de 0 a 100
+      return Math.round((rating / 100) * 5 * 10) / 10;
+    }
+
+    return 0;
+  }
+
+
+  getCategoryName(catID: string | undefined): string {
+    const map: { [key: string]: string } = {
+      'cat_1': 'Película',
+      'cat_2': 'Serie',
+      'cat_3': 'Videojuego',
+      'cat_4': 'Anime',
+      'cat_5': 'Manga',
+      'cat_6': 'Novela Ligera'
+    };
+    return catID && map[catID] ? map[catID] : 'Desconocida';
+  }
+
+  genreMapTMDB: { [key: string]: string } = {
+    "28": "Acción",
+    "12": "Aventura",
+    "16": "Animación",
+    "35": "Comedia",
+    "80": "Crimen",
+    "99": "Documental",
+    "18": "Drama",
+    "10751": "Familiar",
+    "14": "Fantasía",
+    "36": "Historia",
+    "27": "Terror",
+    "10402": "Música",
+    "9648": "Misterio",
+    "10749": "Romance",
+    "878": "Ciencia Ficción",
+    "10770": "Película de TV",
+    "53": "Suspense",
+    "10752": "Bélica",
+    "37": "Western"
+  };
+
+  genreMapTVTMDB: { [key: string]: string } = {
+    "10759": "Acción y Aventura",
+    "16": "Animación",
+    "35": "Comedia",
+    "80": "Crimen",
+    "99": "Documental",
+    "18": "Drama",
+    "10751": "Familiar",
+    "10762": "Infantil",
+    "9648": "Misterio",
+    "10763": "Noticias",
+    "10764": "Reality",
+    "10765": "Ciencia Ficción y Fantasía",
+    "10766": "Telenovela",
+    "10767": "Talk Show",
+    "10768": "Política y Guerra",
+    "37": "Western"
+  };
+
+  getGenresTranslated(genreIDs: string[] | undefined, category: string | undefined): string[] {
+    if (!genreIDs) return [];
+
+    if (category === 'cat_1') {
+      return genreIDs.map(id => this.genreMapTMDB[id] || id);
+    } else if (category === 'cat_2') {
+      return genreIDs.map(id => this.genreMapTVTMDB[id] || id);
+    }
+    return genreIDs;
+  }
+
+
+
+
+
+}

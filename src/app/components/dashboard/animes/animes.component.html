@@ -15,6 +15,11 @@
           <p *ngIf="(parseFloat(anime.rating!) ?? 0) > 0">
             <strong>Puntuación:</strong> {{ (parseFloat(anime.rating!) / 10) | number:'1.1-1' }}
           </p>
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', anime.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="recentAnimes.length === 0">
@@ -32,6 +37,11 @@
           <p *ngIf="(parseFloat(anime.rating!) ?? 0) > 0">
             <strong>Puntuación:</strong> {{ (parseFloat(anime.rating!) / 10) | number:'1.1-1' }}
           </p>
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', anime.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="popularAnimes.length === 0">
@@ -50,7 +60,11 @@
           <p *ngIf="(parseFloat(anime.rating!) ?? 0) > 0">
             <strong>Puntuación:</strong> {{ (parseFloat(anime.rating!) / 10) | number:'1.1-1' }}
           </p>
-
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', anime.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="upcomingAnimes.length === 0">

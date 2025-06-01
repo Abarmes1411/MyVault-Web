@@ -32,6 +32,11 @@
             <p *ngIf="+(manga.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', manga.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="newsMangas.length === 0">
@@ -49,6 +54,11 @@
             <p *ngIf="+(manga.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', manga.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="topOngoingMangas.length === 0">
@@ -66,6 +76,11 @@
             <p *ngIf="+(manga.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ manga.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', manga.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="bestMangas.length === 0">
@@ -85,6 +100,11 @@
             <p *ngIf="+(novel.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', novel.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="newsNovels.length === 0">
@@ -102,6 +122,11 @@
             <p *ngIf="+(novel.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', novel.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="topOngoingNovels.length === 0">
@@ -119,6 +144,11 @@
             <p *ngIf="+(novel.rating ?? 0) > 0">
               <strong>Puntuación:</strong> {{ novel.rating | number:'1.1-1' }}
             </p>
+            <div class="card-overlay">
+              <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', novel.id]">
+                <i class="bi bi-eye me-2"></i> Detalles
+              </a>
+            </div>
           </div>
         </div>
         <div *ngIf="bestNovels.length === 0">

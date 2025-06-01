@@ -16,9 +16,11 @@
               <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
             </ng-container>
           </p>
-
-
-
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', game.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
         </div>
       </div>
       <div *ngIf="recentGames.length === 0">
@@ -38,7 +40,11 @@
               <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
             </ng-container>
           </p>
-
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', game.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
 
         </div>
       </div>
@@ -59,7 +65,11 @@
               <strong>Puntuación:</strong> {{ (+rating * 2) | number:'1.1-1' }}
             </ng-container>
           </p>
-
+          <div class="card-overlay">
+            <a class="btn btn-light eye-hover" [routerLink]="['/detail-content', game.id]">
+              <i class="bi bi-eye me-2"></i> Detalles
+            </a>
+          </div>
 
         </div>
       </div>

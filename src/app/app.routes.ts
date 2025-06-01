@@ -17,6 +17,7 @@ import {FriendlistComponent} from './pages/friendlist/friendlist.component';
 import {UserlistComponent} from './pages/userlist/userlist.component';
 import {RequestsComponent} from './pages/requests/requests.component';
 import {ChatComponent} from './pages/chat/chat.component';
+import {DetailContentComponent} from './pages/detail-content/detail-content.component';
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -36,6 +37,8 @@ export const routes: Routes = [
   {path: 'friends', component: FriendlistComponent, canActivate: [AuthGuard] },
   {path: 'userlist', component: UserlistComponent, canActivate: [AuthGuard] },
   {path: 'friends/requests', component: RequestsComponent, canActivate: [AuthGuard] },
-  {path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] }
+  {path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
+  {path: 'detail-content/:id', component: DetailContentComponent, canActivate: [AuthGuard] }
+
 
 ];

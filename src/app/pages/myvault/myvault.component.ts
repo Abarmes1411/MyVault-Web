@@ -4,12 +4,14 @@ import {Content} from '../../models/Content.model';
 import {MyvaultService} from '../../services/myvault.service';
 import {AuthService} from '../../services/auth.service';
 import {Auth} from "@angular/fire/auth";
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-myvault',
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './myvault.component.html',
   styleUrl: './myvault.component.css'

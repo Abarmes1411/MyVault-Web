@@ -3,14 +3,16 @@ import {DecimalPipe, NgForOf, NgIf} from "@angular/common";
 import {Content} from '../../../models/Content.model';
 import {MoviesService} from '../../../services/movies.service';
 import {GamesService} from '../../../services/games.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-games',
-    imports: [
-        DecimalPipe,
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    DecimalPipe,
+    NgForOf,
+    NgIf,
+    RouterLink
+  ],
   templateUrl: './games.component.html',
   styleUrl: './games.component.css'
 })

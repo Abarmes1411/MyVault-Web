@@ -1,0 +1,49 @@
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.card img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Animación para icono de lista (rotar y rebotar suavemente) */
+.btn.btn-success .bi-list-check {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.btn.btn-success:hover .bi-list-check {
+  animation: bounce-rotate 0.6s ease forwards;
+}
+
+@keyframes bounce-rotate {
+  0%   { transform: rotate(0deg) translateY(0); }
+  30%  { transform: rotate(15deg) translateY(-5px); }
+  60%  { transform: rotate(-10deg) translateY(3px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* Animación para icono del baúl (escalar + rotar eje Y) */
+.btn.btn-warning .bi-box {
+  transition: transform 0.3s ease;
+  display: inline-block;
+  transform-origin: center center;
+}
+
+.btn.btn-warning:hover .bi-box {
+  animation: open-box 0.5s ease forwards;
+}
+
+@keyframes open-box {
+  0%   { transform: scale(1) rotateY(0deg); }
+  50%  { transform: scale(1.1) rotateY(15deg); }
+  100% { transform: scale(1) rotateY(0deg); }
+}

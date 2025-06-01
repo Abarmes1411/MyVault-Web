@@ -3,13 +3,15 @@ import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {Content} from '../../../models/Content.model';
 import {MoviesService} from '../../../services/movies.service';
 import {ShowsService} from '../../../services/shows.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-shows',
   imports: [
     DecimalPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './shows.component.html',
   styleUrl: './shows.component.css'

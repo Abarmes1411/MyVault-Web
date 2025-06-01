@@ -3,6 +3,7 @@ import {DecimalPipe, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
 import {Content} from '../../../models/Content.model';
 import {ShowsService} from '../../../services/shows.service';
 import {AnimesService} from '../../../services/animes.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-animes',
@@ -10,7 +11,8 @@ import {AnimesService} from '../../../services/animes.service';
     DecimalPipe,
     NgForOf,
     NgIf,
-    TitleCasePipe
+    TitleCasePipe,
+    RouterLink
   ],
   templateUrl: './animes.component.html',
   styleUrl: './animes.component.css'
