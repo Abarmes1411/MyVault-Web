@@ -15,6 +15,19 @@ export class UserreviewsService {
 
   constructor(private database:Database,private authService: AuthService) { }
 
+
+  getUsernameByID(userID: string): Promise<string> {
+    const userRef = ref(this.database, `users/${userID}/username`);
+    return get(userRef).then(snapshot => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        return 'Usuario';
+      }
+    });
+  }
+
+
   getAllUserReviews(): Observable<any[]> {
     return this.authService.getUserDataAuth().pipe(
       switchMap(userData => {
@@ -27,6 +40,14 @@ export class UserreviewsService {
       })
     );
   }
+
+  getUserReviewsByID(userID: string): Observable<any[]> {
+    const userReviewsRef = ref(this.database, `/users/${userID}/userReviews`);
+    return objectVal(userReviewsRef).pipe(
+      map((userReviews: any) => userReviews ? Object.values(userReviews) : [])
+    );
+  }
+
 
   getContentByAnyId(contentID: string): Observable<any | null> {
     const refContents = ref(this.database, '/content');
@@ -103,7 +124,7 @@ export class UserreviewsService {
         if (!userData?.userVault?.id) throw new Error("Usuario no autenticado");
         const uid = userData.userVault.id;
 
-        // Paso 1: buscar la clave real del contenido
+
         const contentRef = ref(this.database, '/content');
         return from(get(contentRef)).pipe(
           switchMap(snapshot => {
@@ -113,14 +134,14 @@ export class UserreviewsService {
 
             snapshot.forEach(child => {
               const val = child.val();
-              if (val.mangaID === contentID || val.animeID === contentID || val.movieID === contentID || val.seriesID === contentID || val.videogameID === contentID || val.bookID === contentID) {
+              if (val.mangaID === contentID || val.animeID === contentID || val.tmdbID === contentID || val.tmdbTVID === contentID || val.gameID === contentID) {
                 realContentKey = child.key!;
               }
             });
 
             if (!realContentKey) throw new Error(`No se encontró un contenido con contentID: ${contentID}`);
 
-            // Paso 2: construir updates
+
             const updates: { [key: string]: any } = {};
             updates[`/users/${uid}/userReviews/${reviewID}`] = reviewData;
             updates[`/content/${realContentKey}/userReviews/${reviewID}`] = {
@@ -134,8 +155,5 @@ export class UserreviewsService {
       })
     );
   }
-
-
-
 
 }

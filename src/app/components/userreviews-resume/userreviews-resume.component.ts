@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export class UserreviewsResumeComponent implements OnInit, OnChanges {
   @Input() userReviewInput!: any;
+  @Input() isOwner: boolean = true;
 
   starIcons: string[] = [];
   contentData: any = null;
@@ -43,7 +44,7 @@ export class UserreviewsResumeComponent implements OnInit, OnChanges {
   }
 
   openEditModal(): void {
-    // Clonamos para no editar directamente el input (evitar problemas en el binding)
+
     this.editReviewData = { ...this.userReviewInput };
     this.showEditModal = true;
   }
@@ -51,6 +52,28 @@ export class UserreviewsResumeComponent implements OnInit, OnChanges {
   closeEditModal(): void {
     this.showEditModal = false;
   }
+
+
+  private loadContentData(): void {
+    if (!this.userReviewInput?.contentID) {
+      console.warn('contentID no definido');
+      return;
+    }
+
+    console.log('Cargando contenido con ID:', this.userReviewInput.contentID);
+
+    this.userReviewService.getContentByAnyId(this.userReviewInput.contentID)
+      .subscribe(content => {
+        if (content) {
+          this.contentData = content;
+          console.log('Contenido encontrado:', content);
+        } else {
+          console.warn('No se encontró contenido para el ID:', this.userReviewInput.contentID);
+        }
+      });
+  }
+
+
 
 
   updateReview(): void {
@@ -94,8 +117,6 @@ export class UserreviewsResumeComponent implements OnInit, OnChanges {
   }
 
 
-
-
   private generateStars(rating: number): void {
     this.starIcons = [];
 
@@ -110,14 +131,6 @@ export class UserreviewsResumeComponent implements OnInit, OnChanges {
     }
   }
 
-  private loadContentData(): void {
-    if (!this.userReviewInput?.contentID) return;
-
-    this.userReviewService.getContentByAnyId(this.userReviewInput.contentID)
-      .subscribe(content => {
-        this.contentData = content;
-      });
-  }
 
   deleteReview(): void {
 

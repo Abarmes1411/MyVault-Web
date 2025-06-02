@@ -2,10 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {Content} from '../../models/Content.model';
 import {ActivatedRoute} from '@angular/router';
 import {DetailContentsService} from '../../services/detail-contents.service';
-import {DecimalPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
+import {DecimalPipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
 import {Database, get, ref} from '@angular/fire/database';
 import {SelectListModalComponent} from '../../components/select-list-modal/select-list-modal.component';
+import {
+  UserreviewsDetailcontentResumeComponent
+} from '../../components/userreviews-detailcontent-resume/userreviews-detailcontent-resume.component';
+import {FormsModule} from '@angular/forms';
+import {UserReview} from '../../models/UserReview.model';
 
 @Component({
   selector: 'app-detail-content',
@@ -16,6 +21,9 @@ import {SelectListModalComponent} from '../../components/select-list-modal/selec
     SelectListModalComponent,
     NgForOf,
     DecimalPipe,
+    UserreviewsDetailcontentResumeComponent,
+    FormsModule,
+    NgClass,
   ],
   templateUrl: './detail-content.component.html',
   styleUrl: './detail-content.component.css'
@@ -28,10 +36,11 @@ export class DetailContentComponent implements OnInit {
   userLists: string[] = [];
   showListModal = false;
   showOriginalRating = false;
-
-
-
-
+  userReviews: any[] = [];
+  showReviewModal = false;
+  canReview = false;
+  userID = '';
+  newReview = new UserReview('', '', 0, '', '');
 
   constructor(
     private route: ActivatedRoute,
@@ -40,12 +49,98 @@ export class DetailContentComponent implements OnInit {
     private db:Database,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadContent(id);
+    this.userID = (await this.authService.getUserId())!;
+
+    if (id && this.userID) {
+      this.content = await this.contentService.getContentById(id);
+      this.contentService.selectedContentId = id;
+
+      await this.checkIfUserCanReview(id);
+      await this.loadUserReviews(id);
     }
   }
+
+
+  async checkIfUserCanReview(contentId: string): Promise<void> {
+    const hasReviewed = await this.contentService.hasUserReviewed(contentId, this.userID);
+
+    const releaseDate = new Date(this.content?.releaseDate || '');
+    const now = new Date();
+    const alreadyReleased = releaseDate <= now;
+
+    this.canReview = !hasReviewed && alreadyReleased;
+  }
+
+  getContentDatabaseId(content: Content): string {
+    return (
+      content.tmdbID ||
+      content.tmdbTVID ||
+      content.gameID ||
+      content.mangaID ||
+      content.animeID || ''
+    );
+  }
+
+
+  openReviewModal(): void {
+    const dbId = this.getContentDatabaseId(this.content!);
+
+    this.newReview = new UserReview(
+      dbId,
+      this.userID,
+      0,
+      '',
+      new Date().toISOString().split('T')[0]
+    );
+    this.showReviewModal = true;
+  }
+
+
+  closeReviewModal(): void {
+    this.showReviewModal = false;
+  }
+
+  async submitReview(): Promise<void> {
+    if (!this.content?.id || !this.userID) return;
+
+    try {
+      await this.contentService.createUserReview(this.content.id, this.newReview);
+      this.canReview = false;
+      this.closeReviewModal();
+    } catch (err) {
+      console.error('Error al enviar la reseña:', err);
+    }
+  }
+
+  async loadUserReviews(contentId: string): Promise<void> {
+    const reviewsRef = ref(this.db, `content/${contentId}/userReviews/`);
+    const snapshot = await get(reviewsRef);
+
+    const reviews: any[] = [];
+
+    if (snapshot.exists()) {
+      const reviewsObj = snapshot.val();
+
+      for (const key in reviewsObj) {
+        const review = reviewsObj[key];
+        const userID = review.userID;
+
+
+        const userSnapshot = await get(ref(this.db, `users/${userID}/username`));
+        const username = userSnapshot.exists() ? userSnapshot.val() : 'Anónimo';
+
+        reviews.push({
+          ...review,
+          username
+        });
+      }
+    }
+
+    this.userReviews = reviews;
+  }
+
 
 
   async loadContent(id: string): Promise<void> {
@@ -231,7 +326,9 @@ export class DetailContentComponent implements OnInit {
     return genreIDs;
   }
 
-
+  goBack() {
+    window.history.back();
+  }
 
 
 

@@ -38,7 +38,8 @@ export const routes: Routes = [
   {path: 'userlist', component: UserlistComponent, canActivate: [AuthGuard] },
   {path: 'friends/requests', component: RequestsComponent, canActivate: [AuthGuard] },
   {path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
-  {path: 'detail-content/:id', component: DetailContentComponent, canActivate: [AuthGuard] }
+  {path: 'detail-content/:id', component: DetailContentComponent, canActivate: [AuthGuard] },
+  {path: 'userreviews/:id', component: UserreviewsComponent, canActivate: [AuthGuard] },
 
 
 ];

@@ -38,12 +38,14 @@
         <p><strong>Fecha:</strong> {{ userReviewInput.reviewDate }}</p>
 
         <div class="d-flex justify-content-center gap-2 mt-3">
-          <button class="btn btn-outline-primary edit-hover" (click)="openEditModal()" [disabled]="updateDisabled">
-            <i class="bi bi-pencil-square"></i> Editar review
+          <button class="btn btn-outline-primary btn-sm" (click)="openEditModal()" *ngIf="isOwner">
+            <i class="bi bi-pencil"></i> Editar
           </button>
-          <button class="btn btn-outline-danger trash-hover" (click)="deleteReview()">
-            <i class="bi bi-trash"></i> Eliminar review
+
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteReview()" *ngIf="isOwner">
+            <i class="bi bi-trash"></i> Eliminar
           </button>
+
         </div>
       </div>
     </div>

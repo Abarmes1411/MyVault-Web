@@ -6,6 +6,7 @@ import {RouterLink} from '@angular/router';
 import {UserlistsService} from '../../services/userlists.service';
 import {RequestsService} from '../../services/requests.service';
 import {Auth, getAuth} from '@angular/fire/auth';
+import {of, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-userlist-resume',
@@ -19,6 +20,7 @@ import {Auth, getAuth} from '@angular/fire/auth';
   styleUrl: './userlist-resume.component.css'
 })
 export class UserlistResumeComponent implements OnInit {
+  @Input() friendIdInput!: any;
   @Input() userlistInput!: any;
   @Input() contexto!: 'amigos' | 'usuarios' | 'peticiones';
   userlists: any[] = [];
@@ -79,5 +81,6 @@ export class UserlistResumeComponent implements OnInit {
         .catch(err => console.error('Error al eliminar amigo:', err));
     }
   }
+
 
 }

@@ -2,11 +2,11 @@
 export class UserReview {
   contentID: string;
   userID: string;
-  rating: Number;
+  rating: number;
   comment: string;
   reviewDate: string;
 
-  constructor(contentID: string, userID: string, rating: Number, comment: string, reviewDate: string) {
+  constructor(contentID: string, userID: string, rating: number, comment: string, reviewDate: string) {
     this.contentID = contentID;
     this.userID = userID;
     this.rating = rating;

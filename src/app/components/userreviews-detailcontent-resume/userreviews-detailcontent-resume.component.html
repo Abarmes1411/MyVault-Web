@@ -1,1 +1,12 @@
-<p>userreviews-detailcontent-resume works!</p>
+<div class="bg-secondary bg-opacity-50 rounded p-3 mb-3">
+  <div class="d-flex justify-content-between">
+    <strong class="text-warning">{{ reviews.username }}</strong>
+    <span>
+      <ng-container *ngFor="let star of getStars(reviews.rating)">
+        <img [src]="star" width="20" height="20" alt="estrella">
+      </ng-container>
+    </span>
+  </div>
+  <small class="text-muted">{{ reviews.reviewDate | date:'mediumDate' }}</small>
+  <p class="mt-2 text-light">{{ reviews.comment }}</p>
+</div>
