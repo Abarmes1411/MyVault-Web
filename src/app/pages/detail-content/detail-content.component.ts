@@ -400,6 +400,26 @@ export class DetailContentComponent implements OnInit {
     "Thriller": "Thriller"
   };
 
+  genreMapRAWG: { [key: string]: string } = {
+    "Action": "Acción",
+    "Adventure": "Aventura",
+    "RPG": "RPG",
+    "Simulation": "Simulación",
+    "Massively Multiplayer": "Multijugador Masivo",
+    "Family": "Familia",
+    "Strategy": "Estrategia",
+    "Puzzle": "Rompecabezas",
+    "Racing": "Carreras",
+    "Board Games": "Juegos de mesa",
+    "Indie": "Indie",
+    "Shooter": "Disparos",
+    "Arcade": "Arcade",
+    "Card": "Cartas",
+    "Casual": "Casual",
+    "Fighting": "Lucha",
+    "Educational": "Educativo"
+  };
+
   getGenresTranslated(genreIDs: string[] | undefined, category: string | undefined): string[] {
     if (!genreIDs) return [];
 
@@ -409,6 +429,8 @@ export class DetailContentComponent implements OnInit {
       return genreIDs.map(id => this.genreMapTVTMDB[id] || id);
     } else if (category === 'cat_6'|| category === 'cat_4'|| category === 'cat_5') {
       return genreIDs.map(id => this.genreMapAnilist[id] || id);
+    } else if (category === 'cat_3') {
+      return genreIDs.map(id => this.genreMapRAWG[id] || id);
     }
     return genreIDs;
   }
