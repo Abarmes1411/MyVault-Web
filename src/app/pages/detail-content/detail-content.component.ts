@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DetailContentsService} from '../../services/detail-contents.service';
 import {DecimalPipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
-import {Database, get, ref} from '@angular/fire/database';
+import {Database, get, ref, update} from '@angular/fire/database';
 import {SelectListModalComponent} from '../../components/select-list-modal/select-list-modal.component';
 import {
   UserreviewsDetailcontentResumeComponent
@@ -41,6 +41,8 @@ export class DetailContentComponent implements OnInit {
   canReview = false;
   userID = '';
   newReview = new UserReview('', '', 0, '', '');
+  reviewWarningMessage: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -57,10 +59,27 @@ export class DetailContentComponent implements OnInit {
       this.content = await this.contentService.getContentById(id);
       this.contentService.selectedContentId = id;
 
+      const rawDescription = this.content?.description || '';
+      const cleanDesc = this.cleanDescription(rawDescription);
+
+      if (cleanDesc.length > 20 && this.isEnglish(cleanDesc)) {
+        try {
+          const translated = await this.translateDescription(cleanDesc);
+          this.content!.description = translated;
+           await update(ref(this.db, `content/${id}`), { description: translated });
+        } catch (err) {
+          this.content!.description = cleanDesc || 'Sinopsis no disponible';
+          console.error('Error al traducir descripción:', err);
+        }
+      } else {
+        this.content!.description = cleanDesc || 'Sinopsis no disponible';
+      }
+
       await this.checkIfUserCanReview(id);
       await this.loadUserReviews(id);
     }
   }
+
 
 
   async checkIfUserCanReview(contentId: string): Promise<void> {
@@ -70,8 +89,17 @@ export class DetailContentComponent implements OnInit {
     const now = new Date();
     const alreadyReleased = releaseDate <= now;
 
+    if (hasReviewed) {
+      this.reviewWarningMessage = 'Ya has hecho una reseña para este contenido.';
+    } else if (!alreadyReleased) {
+      this.reviewWarningMessage = 'Este contenido aún no se ha estrenado. No puedes hacer una reseña todavía.';
+    } else {
+      this.reviewWarningMessage = '';
+    }
+
     this.canReview = !hasReviewed && alreadyReleased;
   }
+
 
   getContentDatabaseId(content: Content): string {
     return (
@@ -141,11 +169,47 @@ export class DetailContentComponent implements OnInit {
     this.userReviews = reviews;
   }
 
-
-
   async loadContent(id: string): Promise<void> {
     this.content = await this.contentService.getContentById(id);
   }
+
+
+  cleanDescription(raw: string): string {
+    if (!raw) return '';
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = raw;
+    return tmp.textContent?.trim() || '';
+  }
+
+  isEnglish(text: string): boolean {
+    const lower = text.toLowerCase();
+    return (
+      lower.includes('the ') ||
+      lower.includes('is ') ||
+      lower.includes('with ') ||
+      lower.includes('a ') ||
+      lower.includes('in ')
+    );
+  }
+
+
+  async translateDescription(text: string): Promise<string> {
+    const response = await fetch('https://us-central1-myvault-cf31b.cloudfunctions.net/translateText', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ text })
+    });
+
+    if (!response.ok) throw new Error('Error al traducir');
+
+    const data = await response.json();
+    return data.translated;
+  }
+
+
+
 
   toggleOriginalRating(): void {
     this.showOriginalRating = !this.showOriginalRating;

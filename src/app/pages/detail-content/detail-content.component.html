@@ -158,6 +158,10 @@
     <div class="mt-5">
       <h3 class="text-light mb-4">Reseñas de usuarios</h3>
 
+      <div *ngIf="reviewWarningMessage" class="alert alert-warning mt-3">
+        {{ reviewWarningMessage }}
+      </div>
+
       <!-- Botón para abrir el modal -->
       <button class="btn btn-outline-light mt-4" (click)="openReviewModal()" [disabled]="!canReview">
         Hacer una reseña
