@@ -100,7 +100,19 @@
           </div>
           <div *ngSwitchCase="'cat_2'">
             <h5 class="text-uppercase text-secondary">Géneros</h5>
-            <p>{{ getGenresTranslated(content.genresTMDB || [], content.categoryID).join(', ') }}</p>
+            <p>{{ getGenresTranslated(content.genresTVTMDB || [], content.categoryID).join(', ') }}</p>
+          </div>
+          <div *ngSwitchCase="'cat_4'">
+            <h5 class="text-uppercase text-secondary">Géneros</h5>
+            <p>{{ getGenresTranslated(content.genresAnime || [], content.categoryID).join(', ') }}</p>
+          </div>
+          <div *ngSwitchCase="'cat_5'">
+            <h5 class="text-uppercase text-secondary">Géneros</h5>
+            <p>{{ getGenresTranslated(content.genresManga || [], content.categoryID).join(', ') }}</p>
+          </div>
+          <div *ngSwitchCase="'cat_6'">
+            <h5 class="text-uppercase text-secondary">Géneros</h5>
+            <p>{{ getGenresTranslated(content.genresManga || [], content.categoryID).join(', ') }}</p>
           </div>
           <!-- Información general según categoría -->
           <div class="mb-4">

@@ -379,6 +379,27 @@ export class DetailContentComponent implements OnInit {
     "37": "Western"
   };
 
+  genreMapAnilist: { [key: string]: string } = {
+    "Action": "Acción",
+    "Adventure": "Aventura",
+    "Comedy": "Comedia",
+    "Drama": "Drama",
+    "Ecchi": "Ecchi",
+    "Fantasy": "Fantasía",
+    "Horror": "Terror",
+    "Mahou Shoujo": "Chica Mágica",
+    "Mecha": "Mecha",
+    "Music": "Música",
+    "Mystery": "Misterio",
+    "Psychological": "Psicológico",
+    "Romance": "Romance",
+    "Sci-Fi": "Ciencia Ficción",
+    "Slice of Life": "Slice of Life",
+    "Sports": "Deportes",
+    "Supernatural": "Sobrenatural",
+    "Thriller": "Thriller"
+  };
+
   getGenresTranslated(genreIDs: string[] | undefined, category: string | undefined): string[] {
     if (!genreIDs) return [];
 
@@ -386,6 +407,8 @@ export class DetailContentComponent implements OnInit {
       return genreIDs.map(id => this.genreMapTMDB[id] || id);
     } else if (category === 'cat_2') {
       return genreIDs.map(id => this.genreMapTVTMDB[id] || id);
+    } else if (category === 'cat_6'|| category === 'cat_4'|| category === 'cat_5') {
+      return genreIDs.map(id => this.genreMapAnilist[id] || id);
     }
     return genreIDs;
   }
