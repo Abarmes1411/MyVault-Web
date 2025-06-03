@@ -102,6 +102,10 @@
             <h5 class="text-uppercase text-secondary">Géneros</h5>
             <p>{{ getGenresTranslated(content.genresTVTMDB || [], content.categoryID).join(', ') }}</p>
           </div>
+          <div *ngSwitchCase="'cat_3'">
+            <h5 class="text-uppercase text-secondary">Géneros</h5>
+            <p>{{ getGenresTranslated(content.genresGame || [], content.categoryID).join(', ') }}</p>
+          </div>
           <div *ngSwitchCase="'cat_4'">
             <h5 class="text-uppercase text-secondary">Géneros</h5>
             <p>{{ getGenresTranslated(content.genresAnime || [], content.categoryID).join(', ') }}</p>
@@ -136,7 +140,6 @@
               <ng-container *ngIf="content.categoryID === 'cat_3'">
                 <li *ngIf="content.platforms?.length"><strong>Plataformas: </strong> {{ content.platforms?.join(', ') }}</li>
                 <li *ngIf="content.website"><strong>Sitio web: </strong> <a [href]="content.website" target="_blank" rel="noopener noreferrer">{{ content.website }}</a></li>
-                <li *ngIf="content.genresGame?.length"><strong>Géneros:</strong> {{ content.genresGame?.join(', ') }}</li>
                 <li *ngIf="content.developers?.length"><strong>Desarrolladores:</strong> {{ content.developers?.join(', ') }}</li>
                 <li *ngIf="content.source"><strong>Origen:</strong> {{ content.source }}</li>
               </ng-container>
@@ -144,14 +147,12 @@
               <!-- Anime -->
               <ng-container *ngIf="content.categoryID === 'cat_4'">
                 <li *ngIf="content.episodes"><strong>Episodios:</strong> {{ content.episodes }}</li>
-                <li *ngIf="content.genresAnime?.length"><strong>Géneros:</strong> {{ content.genresAnime?.join(', ') }}</li>
                 <li *ngIf="content.studios?.length"><strong>Estudios:</strong> {{ content.studios?.join(', ') }}</li>
                 <li *ngIf="content.source"><strong>Origen:</strong> {{ content.source }}</li>
               </ng-container>
 
               <!-- Manga / Novelas -->
               <ng-container *ngIf="content.categoryID === 'cat_5' || content.categoryID === 'cat_6'">
-                <li *ngIf="content.genresManga?.length"><strong>Géneros:</strong> {{ content.genresManga?.join(', ') }}</li>
                 <li *ngIf="content.source"><strong>Origen:</strong> {{ content.source }}</li>
               </ng-container>
 
