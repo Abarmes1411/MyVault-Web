@@ -42,6 +42,9 @@ export class DetailContentComponent implements OnInit {
   userID = '';
   newReview = new UserReview('', '', 0, '', '');
   reviewWarningMessage: string = '';
+  summaryAI: string = '';
+  summaryLoading: boolean = false;
+  summaryError: string = '';
 
 
   constructor(
@@ -77,10 +80,40 @@ export class DetailContentComponent implements OnInit {
 
       await this.checkIfUserCanReview(id);
       await this.loadUserReviews(id);
+
+      await this.loadSummary(id);
     }
   }
 
+  async loadSummary(contentId: string): Promise<void> {
+    this.summaryLoading = true;
+    this.summaryError = '';
+    this.summaryAI = '';
 
+    try {
+      // Lee resumen guardado en Firebase
+      const summarySnap = await get(ref(this.db, `content/${contentId}/summaryAI`));
+      if (summarySnap.exists()) {
+        this.summaryAI = summarySnap.val();
+      } else {
+        this.summaryAI = 'No hay resumen disponible.';
+      }
+
+      // Llamar a servicio para actualizar el resumen solo si hay 3 reseñas nuevas
+      await this.contentService.callGenerateSummary(contentId);
+
+      // Tras la generación, se recarga un resumen actualizado
+      const updatedSummarySnap = await get(ref(this.db, `content/${contentId}/summaryAI`));
+      if (updatedSummarySnap.exists()) {
+        this.summaryAI = updatedSummarySnap.val();
+      }
+    } catch (error) {
+      console.error('Error cargando resumen IA:', error);
+      this.summaryError = 'No se pudo cargar el resumen de IA.';
+    } finally {
+      this.summaryLoading = false;
+    }
+  }
 
   async checkIfUserCanReview(contentId: string): Promise<void> {
     const hasReviewed = await this.contentService.hasUserReviewed(contentId, this.userID);

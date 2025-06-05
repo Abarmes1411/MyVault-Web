@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Content} from '../models/Content.model';
 import {equalTo, query} from 'firebase/database';
 import {UserReview} from '../models/UserReview.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,47 @@ export class DetailContentsService {
       set(userReviewRef, reviewData)
     ]);
   }
+
+
+  async callGenerateSummary(contentId: string): Promise<void> {
+    const contentRef = ref(this.db, `content/${contentId}`);
+    const contentSnap = await get(contentRef);
+    if (!contentSnap.exists()) return;
+
+    const contentData = contentSnap.val();
+    const reviews = contentData.userReviews ? Object.values(contentData.userReviews) : [];
+
+    if (reviews.length < 3) return;
+
+    const lastCount = contentData.summaryReviewCount ?? 0;
+
+    // Solo generar resumen si hay al menos 3 reseñas nuevas
+    if (reviews.length < lastCount + 3) {
+      console.log('No hay suficientes reseñas nuevas para generar un nuevo resumen.');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://us-central1-myvault-cf31b.cloudfunctions.net/generateSummary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reviews: reviews.map((r: any) => r.comment)
+        })
+      });
+
+      const result = await response.json();
+      if (result.summary) {
+        await set(ref(this.db, `content/${contentId}/summaryAI`), result.summary);
+        await set(ref(this.db, `content/${contentId}/summaryReviewCount`), reviews.length);
+      }
+    } catch (err) {
+      console.error('Error llamando a la función generateSummary:', err);
+    }
+  }
+
+
 
 }

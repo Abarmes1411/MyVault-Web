@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {lastValueFrom, map, Observable} from 'rxjs';
 import {Content} from '../models/Content.model';
 import {Categories} from '../models/Category.model';
-import {Database, ref, set} from '@angular/fire/database';
+import {Database, get, ref, set, update} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +23,37 @@ export class SearchService {
       content.title = baseTitle;
     }
 
-    // 2. Normalizar el título
+    // 2. Normalizar título
     const normalizedTitle = baseTitle!.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-    // 3. Formatear la fecha según categoría
+    // 3. Formatear clave única
     let uniqueKey = '';
     const releaseDate = content.releaseDate || '0000-00-00';
 
     if (content.categoryID === 'cat_1') {
-      // Películas → dos últimos dígitos del año
-      const yearSuffix = releaseDate.slice(2, 4) || 'xx'; // ej: 2023 → 23
+      const yearSuffix = releaseDate.slice(2, 4) || 'xx';
       uniqueKey = `${normalizedTitle}_${yearSuffix}`;
     } else {
-      // Resto → fecha completa
       uniqueKey = `${normalizedTitle}_${releaseDate}`;
     }
 
-    // 4. Asignar ID e insertar en Firebase
     content.id = uniqueKey;
     const contentRef = ref(this.db, `content/${uniqueKey}`);
-    await set(contentRef, content);
 
-    console.log(`Contenido insertado correctamente con ID: ${uniqueKey}`);
+    // 4. Leer datos actuales para no perder campos extra
+    const snapshot = await get(contentRef);
+    const existingData = snapshot.exists() ? snapshot.val() : {};
+
+    // 5. Mezclar datos sin perder userReviews, summaryAI, summaryCount
+    const mergedData = {
+      ...existingData,
+      ...content
+    };
+
+    // 6. Actualizar sin borrar nada más
+    await update(contentRef, mergedData);
+
+    console.log(`Contenido insertado o actualizado correctamente con ID: ${uniqueKey}`);
     return uniqueKey;
   }
 

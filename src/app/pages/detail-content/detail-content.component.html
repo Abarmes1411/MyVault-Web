@@ -169,7 +169,21 @@
     </div>
 
     <div class="mt-5">
-      <h3 class="text-light mb-4">Reseñas de usuarios</h3>
+      <h3 class="text-light mb-4">Resumen de reseñas (IA)</h3>
+
+      <div *ngIf="summaryLoading" class="text-light">
+        Generando resumen...
+      </div>
+
+      <div *ngIf="summaryError" class="alert alert-danger">
+        {{ summaryError }}
+      </div>
+
+      <div *ngIf="summaryAI && !summaryLoading">
+        {{ summaryAI }}
+      </div>
+
+      <h3 class="text-light mb-4 mt-5">Reseñas de usuarios</h3>
 
       <div *ngIf="reviewWarningMessage" class="alert alert-warning mt-3">
         {{ reviewWarningMessage }}
@@ -202,7 +216,6 @@
           </div>
         </div>
       </div>
-
 
       <div *ngIf="userReviews.length === 0">
         No hay reseñas todavía.
