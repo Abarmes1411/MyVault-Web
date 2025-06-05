@@ -1,0 +1,29 @@
+.search-input.ng-animating {
+  width: 200px !important;
+  opacity: 1 !important;
+  padding: 0.375rem 0.75rem;
+}
+.search-input {
+  width: 0;
+  opacity: 0;
+  padding: 0;
+  margin-left: 0;
+  border: none;
+  transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease, margin-left 0.3s ease;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  /* Evita que el input quite espacio cuando no se muestra */
+  pointer-events: none;
+}
+
+.search-input.show {
+  width: 200px;      /* ancho cuando está visible */
+  opacity: 1;
+  padding: 0.375rem 0.75rem;
+  margin-left: 0.5rem;
+  border: 1px solid #ced4da;
+  pointer-events: auto;
+}

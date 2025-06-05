@@ -18,6 +18,7 @@ import {UserlistComponent} from './pages/userlist/userlist.component';
 import {RequestsComponent} from './pages/requests/requests.component';
 import {ChatComponent} from './pages/chat/chat.component';
 import {DetailContentComponent} from './pages/detail-content/detail-content.component';
+import {SearcherComponent} from './pages/searcher/searcher.component';
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -40,6 +41,8 @@ export const routes: Routes = [
   {path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
   {path: 'detail-content/:id', component: DetailContentComponent, canActivate: [AuthGuard] },
   {path: 'userreviews/:id', component: UserreviewsComponent, canActivate: [AuthGuard] },
+  {path: 'search', component: SearcherComponent, canActivate: [AuthGuard] },
+
 
 
 ];

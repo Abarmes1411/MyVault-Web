@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {UserService} from '../../services/user.service';
@@ -14,25 +14,25 @@ import {NgIf} from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService:AuthService, private router:Router, private userService:UserService){}
+  showSearch = false;
+
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
 
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {
-
-    this.authService.getUserDataAuth().subscribe(({user,userVault})=>{
-      if(user){
-        this.isLoggedIn = true;
-      }else{
-        this.isLoggedIn = false;
-      }
-    })
+    this.authService.getUserDataAuth().subscribe(({ user, userVault }) => {
+      this.isLoggedIn = !!user;
+    });
   }
 
-  logout(){
-    this.authService.logout().then(()=>{
-      this.router.navigate(["/"]);
-    }).catch((error)=>{console.log(error)});
+  logout() {
+    this.authService.logout().then(() => {
+      this.router.navigate(['/']);
+    }).catch(error => { console.log(error); });
   }
+
 
 }

@@ -1,0 +1,52 @@
+<div class="search-wrapper">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Busca una película, anime..."
+      class="search-input"
+    />
+
+    <select [(ngModel)]="selectedCategory" class="search-select">
+      <option value="cat_1">Películas</option>
+      <option value="cat_2">Series</option>
+      <option value="cat_3">Videojuegos</option>
+      <option value="cat_4">Anime</option>
+      <option value="cat_5">Manga</option>
+      <option value="cat_6">Novelas ligeras</option>
+    </select>
+
+    <button (click)="doASearch(searchText)" class="search-button">🔍 Buscar</button>
+  </div>
+</div>
+<!-- Loading Spinner -->
+<div *ngIf="loading" class="spinner" style="display: flex; justify-content: center; align-items: center; height: 40vh;">
+  <div class="loader"></div>
+</div>
+
+<!-- Esperando al usuario -->
+<div *ngIf="!loading && !hasSearched" style="margin-left: 20px; margin-top: 20px; text-align: center">
+  <p>Esperando al usuario...</p>
+</div>
+
+<!-- Resultados de búsqueda -->
+<section *ngIf="!loading && searchResults.length > 0">
+  <h2 style="margin-left: 20px; margin-top: 20px">Resultados de la búsqueda</h2>
+  <div class="anime-carousel">
+    <div *ngFor="let item of searchResults" class="anime-card">
+      <img [src]="item.image" [alt]="item.title" />
+      <h2 class="anime-title">{{ item.title }}</h2>
+      <p><strong>Fecha:</strong> {{ item.date }}</p>
+      <div class="card-overlay">
+        <a class="btn btn-light eye-hover" [class.disabled]="loading" (click)="verDetalles(item)">
+          <i class="bi bi-eye me-2"></i> Detalles
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- No resultados -->
+<div *ngIf="!loading && hasSearched && searchResults.length === 0" style="margin-left: 20px; margin-top: 20px;">
+  <p>No se encontraron resultados para "{{ searchText }}".</p>
+</div>
