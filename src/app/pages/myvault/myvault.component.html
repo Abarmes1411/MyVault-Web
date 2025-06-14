@@ -2,7 +2,7 @@
 
   <div id="main" >
     <section>
-      <h2 style="margin-left: 20px; margin-top: 20px">Peliculas</h2>
+      <h2 style="margin-left: 20px; margin-top: 20px" class="section-title">Peliculas</h2>
       <div *ngIf="vaultMovies.length > 0" class="vault-carousel">
         <div *ngFor="let movie of vaultMovies" class="vault-card">
           <img [src]="movie.coverImage" [alt]="movie.title" />
@@ -25,7 +25,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Series</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Series</h2>
       <div *ngIf="vaultShows.length > 0" class="vault-carousel">
         <div *ngFor="let show of vaultShows" class="vault-card">
           <img [src]="show.coverImage" [alt]="show.title" />
@@ -48,7 +48,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Videojuegos</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Videojuegos</h2>
       <div *ngIf="vaultGames.length > 0" class="vault-carousel">
         <div *ngFor="let game of vaultGames" class="vault-card">
           <img [src]="game.coverImage" [alt]="game.title" />
@@ -71,7 +71,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Anime</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Anime</h2>
       <div *ngIf="vaultAnimes.length > 0" class="vault-carousel">
         <div *ngFor="let anime of vaultAnimes" class="vault-card">
           <img [src]="anime.coverImage" [alt]="anime.title" />
@@ -94,7 +94,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Manga</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Manga</h2>
       <div *ngIf="vaultMangas.length > 0" class="vault-carousel">
         <div *ngFor="let manga of vaultMangas" class="vault-card">
           <img [src]="manga.coverImage" [alt]="manga.title" />
@@ -117,7 +117,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Novelas</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Novelas</h2>
       <div *ngIf="vaultNovels.length > 0" class="vault-carousel">
         <div *ngFor="let novel of vaultNovels" class="vault-card">
           <img [src]="novel.coverImage" [alt]="novel.title" />

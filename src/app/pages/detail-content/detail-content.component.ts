@@ -45,6 +45,8 @@ export class DetailContentComponent implements OnInit {
   summaryAI: string = '';
   summaryLoading: boolean = false;
   summaryError: string = '';
+  invalidRating = false;
+
 
 
   constructor(
@@ -166,10 +168,22 @@ export class DetailContentComponent implements OnInit {
   async submitReview(): Promise<void> {
     if (!this.content?.id || !this.userID) return;
 
+    if (this.exceedsWordLimit()) {
+      this.reviewWarningMessage = 'El comentario no puede tener más de 100 palabras.';
+      return;
+    }
+
+    if (this.newReview.rating < 0 || this.newReview.rating > 5) {
+      this.reviewWarningMessage = 'La calificación debe estar entre 0 y 5.';
+      return;
+    }
+
     try {
       await this.contentService.createUserReview(this.content.id, this.newReview);
       this.canReview = false;
       this.closeReviewModal();
+      await this.loadUserReviews(this.content.id);
+      await this.loadContent(this.content.id);
     } catch (err) {
       console.error('Error al enviar la reseña:', err);
     }
@@ -205,6 +219,13 @@ export class DetailContentComponent implements OnInit {
   async loadContent(id: string): Promise<void> {
     this.content = await this.contentService.getContentById(id);
   }
+
+  exceedsWordLimit(): boolean {
+    if (!this.newReview.comment) return false;
+    const wordCount = this.newReview.comment.trim().split(/\s+/).length;
+    return wordCount > 100;
+  }
+
 
 
   cleanDescription(raw: string): string {
@@ -358,6 +379,13 @@ export class DetailContentComponent implements OnInit {
     return 0;
   }
 
+  validateRating(): void {
+    const rating = this.newReview.rating;
+    this.invalidRating = rating < 0 || rating > 5;
+    if (this.invalidRating) {
+      this.newReview.rating = Math.min(5, Math.max(0, rating)); // recorta el valor automáticamente
+    }
+  }
 
   getCategoryName(catID: string | undefined): string {
     const map: { [key: string]: string } = {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {CustomlistsService} from '../../services/customlists.service';
 import {Database} from '@angular/fire/database';
 import {NgForOf, NgIf} from '@angular/common';
@@ -11,7 +11,8 @@ import {ChatsService} from '../../services/chats.service';
   standalone: true,
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './customlist-detail.component.html',
   styleUrls: ['./customlist-detail.component.css']

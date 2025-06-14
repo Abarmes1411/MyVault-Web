@@ -16,20 +16,23 @@ export class ShowsService {
 
   constructor(private http: HttpClient) {}
 
-
+  // Metodo auxiliar para formatear números (mes, día) con dos dígitos (01, 02,...)
   private pad(num: number): string {
     return num.toString().padStart(2, '0');
   }
 
+  // Obtiene series recientes del mes actual y las guarda en Firebase
   fetchRecentShowsAndSave(onComplete?: () => void): void {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     const day = now.getDate();
 
+    // Rango desde el 1 del mes hasta hoy
     const startDate = `${year}-${this.pad(month)}-01`;
     const endDate = `${year}-${this.pad(month)}-${this.pad(day)}`;
 
+    // URL de TMDb para descubrir series emitidas en ese rango, ordenadas por popularidad
     const url = `https://api.themoviedb.org/3/discover/tv?api_key=${this.apiKey}&language=es-ES&sort_by=popularity.desc&first_air_date.gte=${startDate}&first_air_date.lte=${endDate}&page=1`;
 
     this.http.get<any>(url).subscribe({
@@ -37,6 +40,7 @@ export class ShowsService {
         const results = response.results;
 
         for (const show of results) {
+          // Filtrar series japonesas (posibles animes)
           const originalLanguage = show.original_language ?? '';
           const originCountries: string[] = show.origin_country ?? [];
 
@@ -46,6 +50,7 @@ export class ShowsService {
             continue;
           }
 
+          // Mapear datos de la serie
           const tmdbTVID = show.id.toString();
           const title = show.name;
           const description = show.overview;
@@ -56,12 +61,13 @@ export class ShowsService {
           const origin = `recent_tv_${year}`;
           const genres: string[] = show.genre_ids?.map((id: number) => id.toString()) ?? [];
 
+          // Generar un ID único basado en título normalizado y año de lanzamiento (dos últimos dígitos)
           const normalizedTitle = title.toLowerCase().replace(/[^a-z0-9]/g, '');
           const yearSuffix = releaseDate.slice(2, 4);
           const id = `${normalizedTitle}_${yearSuffix}`;
 
           const content: Content = {
-            categoryID: 'cat_2',
+            categoryID: 'cat_2',  // Categoría: series
             title,
             description,
             releaseDate,
@@ -74,6 +80,7 @@ export class ShowsService {
             id
           };
 
+          // Comprueba si existe y actualiza o inserta en Firebase
           await this.checkAndInsertShow(content);
         }
 
@@ -85,13 +92,14 @@ export class ShowsService {
     });
   }
 
-
+  // Metodo similar que obtiene las series más populares del último año
   fetchPopularShowsAndSave(onComplete?: () => void): void {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
     const day = now.getDate();
 
+    // Fecha de hace un año
     const date = `${year - 1}-${this.pad(month)}-${this.pad(day)}`;
     const url = `https://api.themoviedb.org/3/discover/tv?api_key=${this.apiKey}&language=es-ES&sort_by=popularity.desc&first_air_date.gte=${date}&page=1`;
 
@@ -100,6 +108,7 @@ export class ShowsService {
         const results = response.results;
 
         for (const show of results) {
+          // Filtrado de series japonesas (animes)
           const originalLanguage = show.original_language ?? '';
           const originCountries: string[] = show.origin_country ?? [];
 
@@ -147,7 +156,7 @@ export class ShowsService {
     });
   }
 
-
+  // Metodo que obtiene series próximas a estrenarse a partir de hoy
   fetchUpcomingShowsAndSave(onComplete?: () => void): void {
     const now = new Date();
     const year = now.getFullYear();
@@ -209,8 +218,9 @@ export class ShowsService {
     });
   }
 
-
-
+  // Metodo privado que comprueba si la serie ya está en Firebase
+  // Si existe con el mismo origin, comprueba si hay cambios y actualiza
+  // Si no existe, inserta el nuevo contenido
   private async checkAndInsertShow(content: Content): Promise<void> {
     if (!content.tmdbTVID) {
       console.warn(`tmdbTVID está vacío o undefined para el contenido:`, content);
@@ -228,6 +238,7 @@ export class ShowsService {
       if (existing && existing.origin === content.origin) {
         exists = true;
 
+        // Comprobar si algún dato ha cambiado para actualizar
         const needsUpdate =
           existing.title !== content.title ||
           existing.description !== content.description ||
@@ -251,7 +262,7 @@ export class ShowsService {
     }
   }
 
-
+  // Inserta una serie nueva en Firebase con un ID único
   private async insertShow(content: Content): Promise<void> {
     const normalizedTitle = content.title?.toLowerCase().replace(/[^a-z0-9]/g, '');
     const releaseDate = content.releaseDate;

@@ -22,16 +22,6 @@ export class Content {
   tmdbTVID?: string;
   genresTVTMDB?: string[];
 
-  // Libros
-  bookID?: string;
-  publisher?: string;
-  authors?: string[];
-  isEbook?: boolean;
-  saleability?: string;
-  pages?: string;
-  language?: string;
-  retailPrice?: string;
-  currency?: string;
 
   // Videojuegos
   gameID?: string;

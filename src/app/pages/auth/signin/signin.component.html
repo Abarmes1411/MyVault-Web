@@ -1,5 +1,5 @@
 
-<section class="vh-100" style="background-color: #e3f2fd;">
+<section class="min-height: 100vh" style="background-color: #e3f2fd;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -40,8 +40,8 @@
               </div>
 
               <div class="mb-3">
-                <label for="inputUsername" class="form-label" style="color: #0277bd; font-weight: 600;">Correo Electrónico:</label>
-                <input formControlName="email" type="text" class="form-control" id="inputUsername" placeholder="Ingrese su correo">
+                <label for="inputEmail" class="form-label" style="color: #0277bd; font-weight: 600;">Correo Electrónico:</label>
+                <input formControlName="email" type="text" class="form-control" id="inputEmail" placeholder="Ingrese su correo">
                 <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">
                   <small *ngIf="registerForm.get('email')?.hasError('required')">El correo es obligatorio.</small>
                   <small *ngIf="registerForm.get('email')?.hasError('email')">Ingrese un correo válido.</small>
@@ -71,7 +71,6 @@
                 Registrarse
               </button>
             </form>
-            -
 
             <hr class="my-4">
             <p class="small text-muted">¿Ya tienes una cuenta? <a href="/login" style="color: #0288d1; font-weight: 600;">Inicia sesión aquí</a></p>

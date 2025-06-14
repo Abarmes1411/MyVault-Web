@@ -5,7 +5,7 @@
 
   <div id="main" *ngIf="!loading">
     <section>
-      <h2 style="margin-left: 20px; margin-top: 20px">  En emisión en esta temporada de {{ temporadaActual() | titlecase }}
+      <h2 style="margin-left: 20px; margin-top: 20px" class="section-title">  En emisión en esta temporada de {{ temporadaActual() | titlecase }}
       </h2>
       <div *ngIf="recentAnimes.length > 0" class="anime-carousel">
         <div *ngFor="let anime of recentAnimes" class="anime-card">
@@ -28,7 +28,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Populares</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Populares</h2>
       <div *ngIf="popularAnimes.length > 0" class="anime-carousel">
         <div *ngFor="let anime of popularAnimes" class="anime-card">
           <img [src]="anime.coverImage" [alt]="anime.title" />
@@ -50,7 +50,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Lo mejor de {{ anioAnterior() }}
+      <h2 style="margin-left: 20px;" class="section-title">Lo mejor de {{ anioAnterior() }}
       </h2>
       <div *ngIf="upcomingAnimes.length > 0" class="anime-carousel">
         <div *ngFor="let anime of upcomingAnimes" class="anime-card">

@@ -19,10 +19,11 @@ import {Content} from '../../models/Content.model';
 })
 export class SearcherComponent {
   searchText: string = '';
-  selectedCategory: Categories | undefined;
+  selectedCategory: Categories = Categories.PELICULAS;
   loading: boolean = false;
   searchResults: any[] = [];
   hasSearched: boolean = false;
+
 
 
   private searchSubject = new Subject<string>();

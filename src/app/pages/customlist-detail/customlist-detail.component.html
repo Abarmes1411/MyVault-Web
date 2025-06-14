@@ -39,7 +39,7 @@
           </p>
 
           <div class="d-flex gap-2 mt-3">
-            <a class="btn btn-success eye-hover">
+            <a class="btn btn-success eye-hover" [routerLink]="['/detail-content', content.id]">
               <i class="bi bi-eye me-2"></i> Detalles
             </a>
             <a *ngIf="userID === listOwnerID"

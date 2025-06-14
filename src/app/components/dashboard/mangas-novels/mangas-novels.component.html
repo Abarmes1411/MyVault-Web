@@ -23,7 +23,7 @@
   <div id="main" *ngIf="!loading">
     <div *ngIf="selectedType === 'manga'">
       <section>
-        <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+        <h2 style="margin-left: 20px; margin-top: 20px" class="section-title">Lo más reciente</h2>
         <div *ngIf="newsMangas.length > 0" class="manga-carousel">
           <div *ngFor="let manga of newsMangas" class="manga-card">
             <img [src]="manga.coverImage" [alt]="manga.title" />
@@ -45,7 +45,7 @@
       </section>
 
       <section>
-        <h2 style="margin-left: 20px;">Lo mejor en emisión</h2>
+        <h2 style="margin-left: 20px;" class="section-title" class="section-title">Lo mejor en emisión</h2>
         <div *ngIf="topOngoingMangas.length > 0" class="manga-carousel">
           <div *ngFor="let manga of topOngoingMangas" class="manga-card">
             <img [src]="manga.coverImage" [alt]="manga.title" />
@@ -67,7 +67,7 @@
       </section>
 
       <section>
-        <h2 style="margin-left: 20px;">Mejores mangas de 2024</h2>
+        <h2 style="margin-left: 20px;" class="section-title" class="section-title">Mejores mangas de 2024</h2>
         <div *ngIf="bestMangas.length > 0" class="manga-carousel">
           <div *ngFor="let manga of bestMangas" class="manga-card">
             <img [src]="manga.coverImage" [alt]="manga.title" />
@@ -91,7 +91,7 @@
 
     <div *ngIf="selectedType === 'novel'">
       <section>
-        <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+        <h2 style="margin-left: 20px; margin-top: 20px" class="section-title">Lo más reciente</h2>
         <div *ngIf="newsNovels.length > 0" class="manga-carousel">
           <div *ngFor="let novel of newsNovels" class="manga-card">
             <img [src]="novel.coverImage" [alt]="novel.title" />
@@ -113,7 +113,7 @@
       </section>
 
       <section>
-        <h2 style="margin-left: 20px;">Lo mejor en emisión</h2>
+        <h2 style="margin-left: 20px;" class="section-title">Lo mejor en emisión</h2>
         <div *ngIf="topOngoingNovels.length > 0" class="manga-carousel">
           <div *ngFor="let novel of topOngoingNovels" class="manga-card">
             <img [src]="novel.coverImage" [alt]="novel.title" />
@@ -135,7 +135,7 @@
       </section>
 
       <section>
-        <h2 style="margin-left: 20px;">Mejores mangas de 2024</h2>
+        <h2 style="margin-left: 20px;" class="section-title">Mejores mangas de 2024</h2>
         <div *ngIf="bestNovels.length > 0" class="manga-carousel">
           <div *ngFor="let novel of bestNovels" class="manga-card">
             <img [src]="novel.coverImage" [alt]="novel.title" />

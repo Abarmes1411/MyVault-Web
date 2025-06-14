@@ -1,6 +1,6 @@
 <div class="container py-4">
   <div class="card shadow-sm border-success rounded-lg mt-4 mb-3" style="max-width: 600px; margin: auto;">
-    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center border-bottom border-success">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center border-bottom border-success">
       <div class="d-flex align-items-center">
         <i class="bi bi-list-check me-2"></i>
         <h5 class="mb-0 fw-bold">
@@ -23,7 +23,7 @@
         <button class="btn btn-outline-success trash-hover" (click)="deleteList(customlistInput.listName)">
           <i class="bi bi-trash"></i>
         </button>
-        <a class="btn btn-success eye-hover" [routerLink]="['/customlists-detail', customlistInput.id]">
+        <a class="btn action-button eye-hover" [routerLink]="['/customlists-detail', customlistInput.id]">
           <i class="bi bi-eye me-2"></i> Ver Contenido
         </a>
         <button class="btn btn-outline-success pencil-hover" (click)="activateEdit()">

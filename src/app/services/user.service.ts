@@ -12,43 +12,38 @@ export class UserService {
 
   constructor(private database: Database) { }
 
-  /**
-   * Crea una nueva persona
-   * @param user reserva a guardar o editar
-   */
-  savePerson(user:UserVault){
-    let userRef = ref(this.database,`/${this.COLLECTION_NAME}/${user.id}`);
 
-    return set(userRef,user) as Promise<void>
+  // Guarda un usuario en la base de datos en la ruta /users/{user.id}
+  savePerson(user: UserVault) {
+    const userRef = ref(this.database, `/${this.COLLECTION_NAME}/${user.id}`);
+    return set(userRef, user) as Promise<void>; // Devuelve una promesa que resuelve cuando se guarda
   }
 
+  // Obtiene todos los usuarios guardados en la ruta /users/
   getAllUsers(): Observable<any[]> {
     const personasRef = ref(this.database, '/users/');
     return objectVal(personasRef).pipe(
       map((personas: any) => {
-        if (!personas) return [];
+        if (!personas) return []; // Si no hay datos, devuelve un array vacío
         return Object.entries(personas).map(([id, persona]: [string, any]) => ({
           id,
-          ...JSON.parse(JSON.stringify(persona))
+          ...JSON.parse(JSON.stringify(persona)) // Asegura que se devuelva una copia limpia de los datos
         }));
       })
     );
   }
 
-
-
-
-  getUserByUid(uid:string):Observable<UserVault>{
-
-    const usersRef = ref(this.database,this.COLLECTION_NAME);
-    const userRef = child(usersRef,uid);
-
-    return objectVal(userRef) as Observable<UserVault>
+  // Obtiene un usuario por su UID desde la colección /users
+  getUserByUid(uid: string): Observable<UserVault> {
+    const usersRef = ref(this.database, this.COLLECTION_NAME);
+    const userRef = child(usersRef, uid); // Accede al nodo hijo con la clave UID
+    return objectVal(userRef) as Observable<UserVault>;
   }
 
+  // Actualiza parcialmente los datos de un usuario existente en /users/{userID}
   updateUser(userID: string, updatedData: Partial<UserVault>): Promise<void> {
     const consultRef = ref(this.database, `/users/${userID}`);
-    return set(consultRef, updatedData);
+    return set(consultRef, updatedData); // Sobrescribe los datos con los nuevos datos parciales
   }
 
 }

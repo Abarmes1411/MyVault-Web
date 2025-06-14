@@ -5,7 +5,7 @@
 
   <div id="main" *ngIf="!loading">
     <section>
-      <h2 style="margin-left: 20px; margin-top: 20px">Lo más reciente</h2>
+      <h2 style="margin-left: 20px; margin-top: 20px" class="section-title">Lo más reciente</h2>
       <div *ngIf="recentGames.length > 0" class="game-carousel">
         <div *ngFor="let game of recentGames" class="game-card">
           <img [src]="game.coverImage" [alt]="game.title" />
@@ -29,7 +29,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Populares</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Populares</h2>
       <div *ngIf="popularGames.length > 0" class="game-carousel">
         <div *ngFor="let game of popularGames" class="game-card">
           <img [src]="game.coverImage" [alt]="game.title" />
@@ -54,7 +54,7 @@
     </section>
 
     <section>
-      <h2 style="margin-left: 20px;">Próximamente</h2>
+      <h2 style="margin-left: 20px;" class="section-title">Próximamente</h2>
       <div *ngIf="upcomingGames.length > 0" class="game-carousel">
         <div *ngFor="let game of upcomingGames" class="game-card">
           <img [src]="game.coverImage" [alt]="game.title" />

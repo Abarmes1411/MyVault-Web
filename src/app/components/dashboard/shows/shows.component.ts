@@ -25,20 +25,18 @@ export class ShowsComponent implements OnInit {
   constructor(private showsService: ShowsService) {}
 
   ngOnInit(): void {
-
     if (hasAlreadyFetchedToday('showFetchedDate')) {
       this.loadShowsFromFirebase();
       return;
     }
 
-    // Ejecutar peticiones a TMDB: recent, popular y upcoming
     let recentDone = false;
     let popularDone = false;
     let upcomingDone = false;
 
     const checkAndLoad = () => {
       if (recentDone && popularDone && upcomingDone) {
-        markAsFetchedToday("showFetchedDate")
+        markAsFetchedToday('showFetchedDate');
         this.loadShowsFromFirebase();
       }
     };
@@ -73,7 +71,11 @@ export class ShowsComponent implements OnInit {
       contentSnapshot.forEach((childSnap) => {
         const data = childSnap.val() as Content;
 
-        if (data.categoryID === 'cat_2') {
+        if (
+          data.categoryID === 'cat_2' &&
+          data.title &&
+          isLatinTitle(data.title)
+        ) {
           if (data.origin?.startsWith('recent_') || data.origin?.startsWith('release_')) {
             recent.push(data);
           } else if (data.origin?.startsWith('popular_')) {
@@ -89,14 +91,17 @@ export class ShowsComponent implements OnInit {
       this.upcomingShows = upcoming;
       this.loading = false;
     } catch (error) {
-      console.error('Error cargando las películas desde Firebase:', error);
+      console.error('Error cargando las series desde Firebase:', error);
     }
   }
+}
 
+function isLatinTitle(title: string): boolean {
+  return /^[\p{sc=Latin}\p{N}\p{P}\s]+$/u.test(title);
 }
 
 function hasAlreadyFetchedToday(key: string): boolean {
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const today = new Date().toISOString().split('T')[0];
   const lastFetch = localStorage.getItem(key);
   return lastFetch === today;
 }

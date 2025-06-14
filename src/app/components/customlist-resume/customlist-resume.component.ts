@@ -25,36 +25,44 @@ export class CustomlistResumeComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // Devuelve la cantidad de elementos de la lista (usado en la vista)
   getItemsCount(items: any): number {
     return items ? Object.keys(items).length : 0;
   }
 
+  // Carga todas las listas personalizadas desde el servicio
   loadCustomLists() {
     this.customlistService.getAllAustomLists().subscribe((data) => {
       this.customlists = data;
     });
   }
 
+  // Activa el modo de edición y guarda el nombre actual
   activateEdit(): void {
     this.editandoNombre = true;
     this.nuevoNombre = this.customlistInput.listName;
   }
 
+  // Cancela el modo de edición y borra el texto introducido
   cancelEdit(): void {
     this.editandoNombre = false;
   }
 
+  // Guarda el nuevo nombre de la lista si es diferente al actual
   saveName(): void {
     const oldName = this.customlistInput.id;
     const newName = this.nuevoNombre.trim();
 
+    // Si el nuevo nombre está vacío o no ha cambiado, cancela la edición
     if (!newName || newName === oldName) {
       this.cancelEdit();
       return;
     }
 
+    // Llama al servicio para actualizar el nombre de la lista
     this.customlistService.updateListName(oldName, newName)
       .then(() => {
+        // Actualiza localmente el nombre de la lista
         this.customlistInput.listName = newName;
         this.customlistInput.id = newName;
         this.cancelEdit();
@@ -65,12 +73,14 @@ export class CustomlistResumeComponent implements OnInit {
       });
   }
 
+  // Elimina una lista personalizada tras la confirmación del usuario
   deleteList(listName: string): void {
     const confirmed = confirm(`¿Estás seguro de que deseas eliminar la lista "${listName}"?`);
     if (!confirmed) return;
 
     this.customlistService.deleteCustomList(listName)
       .then(() => {
+        // Recarga las listas tras eliminar una
         this.loadCustomLists();
       })
       .catch((error) => {
@@ -78,6 +88,4 @@ export class CustomlistResumeComponent implements OnInit {
         alert('Ocurrió un error al eliminar la lista.');
       });
   }
-
-
 }

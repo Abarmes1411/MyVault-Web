@@ -7,6 +7,14 @@
   animation: spin 1s linear infinite;
 }
 
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #343a40;
+  position: relative;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
